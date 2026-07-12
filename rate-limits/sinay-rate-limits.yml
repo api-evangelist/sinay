@@ -1,0 +1,61 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Sinay
+providerId: sinay
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Maritime
+- Maritime Data
+- Rate Limiting
+- Quotas
+description: >-
+  Sinay governs API usage primarily through a monthly call / API-unit (credit)
+  allowance tied to the subscribed plan rather than by publishing fixed
+  per-second or per-minute request caps. Each API exposes its own consumption
+  reporting - a /usages endpoint (returning allCalls, successCalls,
+  clientErrorCalls, serverErrorCalls, and consumedApiUnits per month) on the
+  Ports & Vessels, Metocean, CO2, and ETA APIs, and /consumption/current-period
+  and /consumption/periods on the Port Congestion API. Some endpoints consume
+  more than one API unit per call, so the effective request ceiling depends on
+  the per-endpoint credit weighting for the plan.
+notes: >-
+  No fixed numeric per-minute / per-second request-rate limit is documented in
+  the per-product Swagger files as of the review date; throttling is expressed as
+  the monthly plan allowance. Verify plan allowances and any burst limits on the
+  Sinay Developers Platform during reconciliation.
+sources:
+- https://api.sinay.ai/co2/api/v2/swagger.yaml
+- https://api.sinay.ai/congestion/api/v1/swagger.yaml
+- https://developers.sinay.ai/
+- https://help.sinay.ai/sinay-apis
+responseCodes:
+  unauthorized: 401
+limits:
+- name: Monthly API Units / Calls
+  scope: account
+  metric: api_units
+  limit: per plan (free ~500/mo, Pro ~10,000/mo, Enterprise custom)
+  notes: The dominant limit. Reported via each API's /usages consumedApiUnits or the congestion /consumption periods.
+- name: Per-Endpoint Credit Weighting
+  scope: endpoint
+  metric: api_units
+  limit: varies by endpoint
+  notes: Some endpoints consume more than one API unit per call; consult the Developers Platform.
+- name: Fixed Request-Rate Cap
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No per-second/per-minute numeric rate cap documented in the per-product Swagger files.
+policies:
+- name: Monthly Allowance
+  description: Usage is metered against the plan's monthly call / credit allowance rather than a rolling per-minute cap.
+- name: Consumption Reporting
+  description: Clients can self-monitor spend via each API's /usages endpoint or the congestion /consumption endpoints.
+- name: Backoff Strategy
+  description: Clients should implement retries with exponential backoff and handle 401 (auth) and error responses gracefully.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

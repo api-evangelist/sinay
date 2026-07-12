@@ -1,0 +1,168 @@
+{
+  "info": {
+    "name": "Sinay Maritime APIs",
+    "description": "Sinay Developers Platform maritime APIs - Ports & Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. All requests go to https://api.sinay.ai with each product under its own versioned base path. Authenticate with an API_KEY header (get a free key at https://developers.sinay.ai/). Endpoints and shapes are taken from the live per-product Swagger files at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.sinay.ai", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Ports and Vessels",
+      "item": [
+        {
+          "name": "Search vessels",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }],
+            "url": { "raw": "{{baseUrl}}/ports-vessels/api/v1/vessels?vesselNameOrCode=cla&numberOfResult=10", "host": ["{{baseUrl}}"], "path": ["ports-vessels", "api", "v1", "vessels"], "query": [{ "key": "vesselNameOrCode", "value": "cla" }, { "key": "numberOfResult", "value": "10" }] },
+            "description": "Retrieve a list of vessels from a name, an MMSI or an IMO (at least 3 characters)."
+          }
+        },
+        {
+          "name": "Search ports",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }],
+            "url": { "raw": "{{baseUrl}}/ports-vessels/api/v1/ports?portNameOrCode=bal&numberOfResult=10", "host": ["{{baseUrl}}"], "path": ["ports-vessels", "api", "v1", "ports"], "query": [{ "key": "portNameOrCode", "value": "bal" }, { "key": "numberOfResult", "value": "10" }] },
+            "description": "Retrieve a list of ports from a name or an UN/LOCODE (at least 3 characters)."
+          }
+        },
+        {
+          "name": "Usages",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }],
+            "url": { "raw": "{{baseUrl}}/ports-vessels/api/v1/usages", "host": ["{{baseUrl}}"], "path": ["ports-vessels", "api", "v1", "usages"] },
+            "description": "Retrieve your monthly usages for the Ports and Vessels API."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Metocean",
+      "item": [
+        {
+          "name": "List models",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }],
+            "url": { "raw": "{{baseUrl}}/metocean/api/v1/models", "host": ["{{baseUrl}}"], "path": ["metocean", "api", "v1", "models"] },
+            "description": "Retrieve the available metocean models."
+          }
+        },
+        {
+          "name": "Retrieve stations",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"area\": {\n    \"geoJson\": {\n      \"type\": \"Polygon\",\n      \"coordinates\": [[[35.5,-55.7],[36.2,-65.5],[65.0,-64.9],[64.6,-55.1],[35.5,-55.7]]]\n    }\n  },\n  \"time\": {\n    \"start\": \"2022-05-01T00:00:00.000Z\",\n    \"end\": \"2022-05-02T00:00:00.000Z\"\n  },\n  \"model\": {\n    \"name\": \"default\"\n  }\n}" },
+            "url": { "raw": "{{baseUrl}}/metocean/api/v1/stations", "host": ["{{baseUrl}}"], "path": ["metocean", "api", "v1", "stations"] },
+            "description": "Retrieve metocean stations for a GeoJSON area, time window, and model. area, time, and model are required."
+          }
+        },
+        {
+          "name": "Usages",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }],
+            "url": { "raw": "{{baseUrl}}/metocean/api/v1/usages", "host": ["{{baseUrl}}"], "path": ["metocean", "api", "v1", "usages"] },
+            "description": "Retrieve your monthly usages for the Metocean API."
+          }
+        }
+      ]
+    },
+    {
+      "name": "CO2 Emission",
+      "item": [
+        {
+          "name": "Compute CO2",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"vessel\": {\n    \"imo\": 9706906,\n    \"speed\": 13.00\n  },\n  \"departure\": {\n    \"portCode\": \"FRLEH\"\n  },\n  \"arrival\": {\n    \"portCode\": \"ESBCN\"\n  }\n}" },
+            "url": { "raw": "{{baseUrl}}/co2/api/v2/compute-co2", "host": ["{{baseUrl}}"], "path": ["co2", "api", "v2", "compute-co2"] },
+            "description": "Compute the CO2 emissions of a TEU for a voyage between two ports (vessel by IMO or MMSI; ports by UN/LOCODE)."
+          }
+        },
+        {
+          "name": "Usages",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }],
+            "url": { "raw": "{{baseUrl}}/co2/api/v2/usages", "host": ["{{baseUrl}}"], "path": ["co2", "api", "v2", "usages"] },
+            "description": "Retrieve your monthly usages for the CO2 Emission API."
+          }
+        }
+      ]
+    },
+    {
+      "name": "ETA",
+      "item": [
+        {
+          "name": "Compute ETA",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"vessel\": {\n    \"imo\": 9706906\n  },\n  \"departure\": {\n    \"date\": \"2020-01-10T10:00:00.000Z\",\n    \"portCode\": \"FRLEH\"\n  },\n  \"arrival\": {\n    \"portCode\": \"ESBCN\"\n  }\n}" },
+            "url": { "raw": "{{baseUrl}}/etac/api/v1/compute-eta", "host": ["{{baseUrl}}"], "path": ["etac", "api", "v1", "compute-eta"] },
+            "description": "Predict a vessel's ETA. With only vessel + arrival, the latest AIS position is used as departure; or supply departure port and date."
+          }
+        },
+        {
+          "name": "Usages",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }],
+            "url": { "raw": "{{baseUrl}}/etac/api/v1/usages", "host": ["{{baseUrl}}"], "path": ["etac", "api", "v1", "usages"] },
+            "description": "Retrieve your monthly usages for the ETA API."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Port Congestion",
+      "item": [
+        {
+          "name": "Congestion for a port",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }],
+            "url": { "raw": "{{baseUrl}}/congestion/api/v1/congestion/:portCode", "host": ["{{baseUrl}}"], "path": ["congestion", "api", "v1", "congestion", ":portCode"], "variable": [{ "key": "portCode", "value": "FRLEH", "description": "Port UN/LOCODE." }] },
+            "description": "Retrieve aggregated congestion data for a single port by UN/LOCODE."
+          }
+        },
+        {
+          "name": "Congestion batch",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"portCodes\": [\"FRLEH\", \"ESBCN\"]\n}" },
+            "url": { "raw": "{{baseUrl}}/congestion/api/v1/congestion/batch", "host": ["{{baseUrl}}"], "path": ["congestion", "api", "v1", "congestion", "batch"] },
+            "description": "Retrieve aggregated congestion data for up to 10 ports at once."
+          }
+        },
+        {
+          "name": "Current consumption period",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }],
+            "url": { "raw": "{{baseUrl}}/congestion/api/v1/consumption/current-period", "host": ["{{baseUrl}}"], "path": ["congestion", "api", "v1", "consumption", "current-period"] },
+            "description": "Retrieve the current credit consumption period."
+          }
+        },
+        {
+          "name": "Consumption periods",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "API_KEY", "value": "{{apiKey}}" }],
+            "url": { "raw": "{{baseUrl}}/congestion/api/v1/consumption/periods", "host": ["{{baseUrl}}"], "path": ["congestion", "api", "v1", "consumption", "periods"] },
+            "description": "Retrieve all credit consumption periods."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sinay Maritime APIs",
+    "version": "1.0"
+  },
+  "request": {
+    "headers": [
+      { "name": "API_KEY", "value": "{{apiKey}}" }
+    ]
+  },
+  "items": [
+    {
+      "info": { "name": "Ports and Vessels", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Search vessels", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/ports-vessels/api/v1/vessels?vesselNameOrCode=cla&numberOfResult=10",
+            "params": [
+              { "name": "vesselNameOrCode", "value": "cla", "type": "query", "description": "At least 3 letters of the vessel name, the MMSI or the IMO." },
+              { "name": "numberOfResult", "value": "10", "type": "query", "description": "Maximum number of results." }
+            ]
+          },
+          "docs": "Retrieve a list of vessels from a name, an MMSI or an IMO."
+        },
+        {
+          "info": { "name": "Search ports", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/ports-vessels/api/v1/ports?portNameOrCode=bal&numberOfResult=10",
+            "params": [
+              { "name": "portNameOrCode", "value": "bal", "type": "query", "description": "At least 3 letters of the port name or the port code." },
+              { "name": "numberOfResult", "value": "10", "type": "query", "description": "Maximum number of results." }
+            ]
+          },
+          "docs": "Retrieve a list of ports from a name or an UN/LOCODE."
+        },
+        {
+          "info": { "name": "Usages", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.sinay.ai/ports-vessels/api/v1/usages" },
+          "docs": "Retrieve your monthly usages for the Ports and Vessels API."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Metocean", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List models", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.sinay.ai/metocean/api/v1/models" },
+          "docs": "Retrieve the available metocean models."
+        },
+        {
+          "info": { "name": "Retrieve stations", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sinay.ai/metocean/api/v1/stations",
+            "body": { "type": "json", "data": "{\n  \"area\": { \"geoJson\": { \"type\": \"Polygon\", \"coordinates\": [[[35.5,-55.7],[36.2,-65.5],[65.0,-64.9],[64.6,-55.1],[35.5,-55.7]]] } },\n  \"time\": { \"start\": \"2022-05-01T00:00:00.000Z\", \"end\": \"2022-05-02T00:00:00.000Z\" },\n  \"model\": { \"name\": \"default\" }\n}" }
+          },
+          "docs": "Retrieve metocean stations for a GeoJSON area, time window, and model (all required)."
+        },
+        {
+          "info": { "name": "Usages", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.sinay.ai/metocean/api/v1/usages" },
+          "docs": "Retrieve your monthly usages for the Metocean API."
+        }
+      ]
+    },
+    {
+      "info": { "name": "CO2 Emission", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Compute CO2", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sinay.ai/co2/api/v2/compute-co2",
+            "body": { "type": "json", "data": "{\n  \"vessel\": { \"imo\": 9706906, \"speed\": 13.00 },\n  \"departure\": { \"portCode\": \"FRLEH\" },\n  \"arrival\": { \"portCode\": \"ESBCN\" }\n}" }
+          },
+          "docs": "Compute the CO2 emissions of a TEU for a voyage between two ports (vessel by IMO or MMSI; ports by UN/LOCODE)."
+        },
+        {
+          "info": { "name": "Usages", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.sinay.ai/co2/api/v2/usages" },
+          "docs": "Retrieve your monthly usages for the CO2 Emission API."
+        }
+      ]
+    },
+    {
+      "info": { "name": "ETA", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Compute ETA", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sinay.ai/etac/api/v1/compute-eta",
+            "body": { "type": "json", "data": "{\n  \"vessel\": { \"imo\": 9706906 },\n  \"departure\": { \"date\": \"2020-01-10T10:00:00.000Z\", \"portCode\": \"FRLEH\" },\n  \"arrival\": { \"portCode\": \"ESBCN\" }\n}" }
+          },
+          "docs": "Predict a vessel's ETA. With only vessel + arrival, the latest AIS position is used as departure."
+        },
+        {
+          "info": { "name": "Usages", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.sinay.ai/etac/api/v1/usages" },
+          "docs": "Retrieve your monthly usages for the ETA API."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Port Congestion", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Congestion for a port", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/congestion/api/v1/congestion/:portCode",
+            "params": [
+              { "name": "portCode", "value": "FRLEH", "type": "path", "description": "Port UN/LOCODE." }
+            ]
+          },
+          "docs": "Retrieve aggregated congestion data for a single port by UN/LOCODE."
+        },
+        {
+          "info": { "name": "Congestion batch", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sinay.ai/congestion/api/v1/congestion/batch",
+            "body": { "type": "json", "data": "{\n  \"portCodes\": [\"FRLEH\", \"ESBCN\"]\n}" }
+          },
+          "docs": "Retrieve aggregated congestion data for up to 10 ports at once."
+        },
+        {
+          "info": { "name": "Current consumption period", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.sinay.ai/congestion/api/v1/consumption/current-period" },
+          "docs": "Retrieve the current credit consumption period."
+        },
+        {
+          "info": { "name": "Consumption periods", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.sinay.ai/congestion/api/v1/consumption/periods" },
+          "docs": "Retrieve all credit consumption periods."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

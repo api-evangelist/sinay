@@ -1,0 +1,123 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Sinay
+providerId: sinay
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Maritime
+- Maritime Data
+- Vessel Tracking
+- CO2 Emissions
+- Plans
+description: >-
+  Sinay sells access through its Developers Platform as a marketplace of REST
+  APIs metered by monthly API calls / API units (credits). Published tiers are a
+  free plan for getting started, a higher-volume Pro plan, and a custom
+  Enterprise plan; a no-credit-card free trial is also offered. Each API reports
+  its own consumption through a /usages or /consumption endpoint
+  (consumedApiUnits, credit periods). Exact per-call prices and currency are not
+  reconciled here - the figures below reflect publicly described allowances and
+  should be confirmed on the Sinay Developers Platform pricing page.
+notes: >-
+  Call/credit allowances are drawn from public descriptions of Sinay's Developers
+  Platform (free plan ~500 calls/month across ETA, CO2, Port Congestion, Noise;
+  Pro ~10,000 calls/month; Enterprise custom; free trial ~100 calls/month, no
+  credit card). Per-API credit weighting differs by product (some calls consume
+  more than one API unit). Verify current tiers, prices, and per-endpoint credit
+  costs on the Developers Platform during reconciliation.
+sources:
+- https://developers.sinay.ai/
+- https://help.sinay.ai/sinay-apis
+- https://sinay.ai/en/getting-started-with-sinay-apis/
+plans:
+- id: sinay-free-trial
+  name: Free Trial
+  type: trial
+  description: >-
+    No-credit-card trial for evaluating the Sinay APIs, with a small monthly call
+    allowance.
+  entries:
+  - label: Included API Calls
+    name: trial_calls
+    type: usage
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free (approx. 100 calls/month, no credit card)
+    userMultiplied: false
+  elements:
+  - name: Free Developer Key
+  - name: All Marketplace APIs
+- id: sinay-free
+  name: Free
+  type: free
+  description: >-
+    Free developer plan for low-volume use across the marketplace APIs, metered
+    by monthly API calls / credits.
+  entries:
+  - label: Included API Calls
+    name: free_calls
+    type: usage
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free (approx. 500 calls/month)
+    userMultiplied: false
+  elements:
+  - name: ETA API
+  - name: CO2 Emission API
+  - name: Port Congestion API
+  - name: Ports and Vessels API
+  - name: Metocean API
+- id: sinay-pro
+  name: Pro
+  type: paid
+  description: >-
+    Higher-volume paid plan for production workloads, with a larger monthly call /
+    credit allowance across the marketplace APIs.
+  entries:
+  - label: Included API Calls
+    name: pro_calls
+    type: usage
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: paid subscription (approx. 10,000 calls/month; see pricing page)
+    userMultiplied: false
+  elements:
+  - name: Higher Monthly Allowance
+  - name: All Marketplace APIs
+  - name: Support
+- id: sinay-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom plan tailored to a client's volume and product mix, with negotiated
+    credits, terms, and support. Contact Sinay.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Custom API Mix
+  - name: Dedicated Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

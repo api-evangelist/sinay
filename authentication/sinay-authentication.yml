@@ -1,0 +1,22 @@
+generated: '2026-07-12'
+method: derived
+source: openapi/sinay-openapi.yml
+summary:
+  types:
+  - apiKey
+schemes:
+- name: ApiKey
+  type: apiKey
+  in: header
+  keyName: API_KEY
+  description: >-
+    Every Sinay API endpoint requires authentication with an API key. The key is
+    sent in a request header named API_KEY (for example `API_KEY: your-api-key`).
+    The same scheme applies across all Sinay products (Ports & Vessels, Metocean,
+    CO2 Emission, ETA, Port Congestion). Create a free key on the Sinay Developers
+    Platform at https://developers.sinay.ai/. Confirmed from the live per-product
+    Swagger securitySchemes (apiKey / header / API_KEY) on 2026-07-12.
+  sources:
+  - openapi/sinay-openapi.yml
+  - https://api.sinay.ai/co2/api/v2/swagger.yaml
+  - https://developers.sinay.ai/

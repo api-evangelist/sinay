@@ -1,0 +1,91 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Sinay
+providerId: sinay
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Maritime
+- Maritime Data
+- Vessel Tracking
+- CO2 Emissions
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Sinay Developers Platform spend. Sinay bills a subscription plan
+  (Free / Pro / Enterprise) that carries a monthly allowance of API calls / API
+  units (credits), consumed across the maritime APIs (Ports & Vessels, Metocean,
+  CO2 Emission, ETA, Port Congestion). Different endpoints can consume different
+  numbers of API units per call, so cost is driven by call mix as well as call
+  volume. Each API reports its own consumption (consumedApiUnits, credit periods)
+  which is the primary signal for cost visibility.
+notes: >-
+  Per-unit prices, currency, and per-endpoint credit weightings are not
+  reconciled here; verify on the Sinay Developers Platform pricing page. Sinay is
+  France-based, so billing currency may be EUR - confirm on reconciliation.
+sources:
+- https://developers.sinay.ai/
+- https://help.sinay.ai/sinay-apis
+- https://sinay.ai/en/getting-started-with-sinay-apis/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Sinay
+serviceCategory: Maritime Data and Analytics
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly
+  billingCurrency: EUR
+  chargeCategories:
+  - Usage
+  - Purchase
+focusColumns:
+  ServiceName: Sinay Developers Platform
+  ServiceCategory: Maritime Data and Analytics
+  ProviderName: Sinay
+  PublisherName: Sinay
+  InvoiceIssuerName: Sinay
+  BillingCurrency: EUR
+  ChargeCategory: Usage
+  PricingCategory: Subscription-Based
+meters:
+- name: api_units
+  description: API units / credits consumed across Sinay APIs; reported per month as consumedApiUnits per product.
+  unit: api_units
+  aggregation: sum
+  dimensions:
+  - account
+  - api
+- name: api_calls
+  description: Number of API calls made against the monthly plan allowance.
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - account
+  - api
+  - endpoint
+- name: congestion_credits
+  description: Credits consumed by the Port Congestion API, reported via /consumption periods.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Poll each API's /usages endpoint (consumedApiUnits) and the congestion /consumption endpoints to track monthly burn per product.
+- name: Allocation
+  description: Issue separate API keys per workload/team so consumption maps to internal cost centers.
+- name: Optimization
+  description: Batch where possible (e.g. congestion /batch for up to 10 ports), cache stable reference lookups (ports/vessels), and pick the plan tier that matches monthly call volume to avoid overage.
+- name: Accountability
+  description: Assign an owner per key; review monthly consumedApiUnits against the plan allowance and upgrade/downgrade tier accordingly.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

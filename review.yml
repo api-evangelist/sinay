@@ -1,0 +1,112 @@
+aid: sinay
+name: Sinay
+review:
+  question: Does Sinay expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-12'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Every Sinay Developers Platform API is a
+    request/response REST API served over HTTPS from api.sinay.ai. There is no
+    server-push transport (WebSocket or SSE) documented on any Sinay product to
+    model. Sinay does publish a separate Webhooks API (webhook module) for the
+    container-tracking / Safecube surface, which pushes events over HTTP POST to
+    a subscriber-provided endpoint - that is server-to-endpoint HTTP, not a
+    WebSocket, and it sits outside the five maritime-data APIs profiled here.
+findings:
+  summary: |
+    Sinay does not publish a documented public WebSocket API. Sinay is a maritime
+    data and analytics company. Its Developers Platform exposes a marketplace of
+    REST APIs, each mounted under its own versioned base path on the single host
+    api.sinay.ai (for example https://api.sinay.ai/co2/api/v2 and
+    https://api.sinay.ai/ports-vessels/api/v1). Every endpoint is
+    request/response REST over HTTPS and authenticated with an API key sent in an
+    API_KEY header. No realtime, bidirectional, or streaming WebSocket
+    (ws:// or wss://) endpoint is documented on any Sinay API. The catalog entry
+    profiles five APIs - Ports & Vessels, Metocean, CO2 Emission, ETA (ETAC), and
+    Port Congestion. Their endpoints below were confirmed against the live
+    per-product Swagger files.
+  accessModel: |
+    Marketplace of per-product REST APIs on a shared host (api.sinay.ai). Single
+    API_KEY header auth across all products. Metered as monthly API units /
+    credits (each product exposes a /usages or /consumption endpoint reporting
+    consumedApiUnits / credit periods). A free developer key is available to
+    start; paid plans raise the monthly call/credit allowance.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.sinay.ai
+      documented: true
+      note: All five profiled maritime APIs are REST over HTTPS on api.sinay.ai, each under its own product base path.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: A separate Webhooks API (webhook module, container-tracking/Safecube surface) POSTs events to a subscriber endpoint. Server-to-endpoint HTTP, not WebSocket. Out of scope for the five maritime APIs profiled.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented on any Sinay product as of the review date.
+  endpointsConfirmedRest:
+    - GET    https://api.sinay.ai/ports-vessels/api/v1/vessels
+    - GET    https://api.sinay.ai/ports-vessels/api/v1/ports
+    - GET    https://api.sinay.ai/ports-vessels/api/v1/usages
+    - GET    https://api.sinay.ai/metocean/api/v1/models
+    - POST   https://api.sinay.ai/metocean/api/v1/stations
+    - GET    https://api.sinay.ai/metocean/api/v1/usages
+    - POST   https://api.sinay.ai/co2/api/v2/compute-co2
+    - GET    https://api.sinay.ai/co2/api/v2/usages
+    - POST   https://api.sinay.ai/etac/api/v1/compute-eta
+    - GET    https://api.sinay.ai/etac/api/v1/usages
+    - GET    https://api.sinay.ai/congestion/api/v1/congestion/{portCode}
+    - POST   https://api.sinay.ai/congestion/api/v1/congestion/batch
+    - GET    https://api.sinay.ai/congestion/api/v1/consumption/current-period
+    - GET    https://api.sinay.ai/congestion/api/v1/consumption/periods
+  endpointsModeled: |
+    None. All endpoints in the OpenAPI, Postman collection, and Open Collection
+    were transcribed from the live per-product Swagger files. Some request and
+    response bodies (Ports & Vessels vessel/port records, Metocean stations
+    response, ETA response, congestion aggregate shape) are represented as
+    generic objects in the consolidated OpenAPI rather than fully expanded; the
+    authoritative field-level schemas live in the upstream per-product Swagger.
+  otherModules: |
+    Beyond the five profiled APIs, the Sinay Swagger index at
+    https://api.sinay.ai/doc/index.html also lists live specs for: noise
+    (underwater noise emission), schedule (sailing schedules), ports-intelligence
+    (Safecube Ports Intelligence, beta), container-tracking v2, ports-vessels,
+    webhook, and safecube. These were confirmed present (HTTP 200) but are not
+    profiled as separate APIs in this entry.
+sources:
+  - url: https://api.sinay.ai/doc/index.html
+    type: APIReference
+    note: Swagger UI listing all live per-product specs; base host api.sinay.ai.
+  - url: https://api.sinay.ai/co2/api/v2/swagger.yaml
+    type: OpenAPI
+    note: CO2 Emission API v2.3.2. server https://api.sinay.ai/co2/api/v2/; securityScheme apiKey header API_KEY.
+  - url: https://api.sinay.ai/ports-vessels/api/v1/swagger.yaml
+    type: OpenAPI
+    note: Ports and Vessels API v1.0.1. GET /vessels, GET /ports, GET /usages.
+  - url: https://api.sinay.ai/metocean/api/v1/swagger.yaml
+    type: OpenAPI
+    note: Metocean API v1.1.0. GET /models, POST /stations, GET /usages.
+  - url: https://api.sinay.ai/etac/api/v1/swagger.yaml
+    type: OpenAPI
+    note: ETAC (ETA) API v1.5.2. POST /compute-eta, GET /usages.
+  - url: https://api.sinay.ai/congestion/api/v1/swagger.yaml
+    type: OpenAPI
+    note: Congestion API v1.1.1. GET /congestion/{portCode}, POST /congestion/batch, /consumption/*.
+  - url: https://help.sinay.ai/sinay-apis
+    type: Documentation
+    note: Sinay APIs help center; API_KEY header requirement and getting-started.
+  - url: https://developers.sinay.ai/
+    type: SignUp
+    note: Developers Platform for free key generation and plan selection.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists on any Sinay API; all five profiled
+    products are request/response REST over HTTPS on api.sinay.ai. No AsyncAPI
+    document was created because there is no server-push transport on Sinay's
+    maritime APIs to model. The separate Webhooks API delivers events via HTTP
+    POST to a subscriber endpoint and is out of scope for these five APIs.
