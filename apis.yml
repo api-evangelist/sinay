@@ -150,6 +150,8 @@ apis:
     (POST /congestion/batch), plus credit-consumption reporting via
     /consumption/current-period and /consumption/periods.
 common:
+- type: AgenticAccess
+  url: agentic-access/sinay-agentic-access.yml
 - type: DomainSecurity
   url: security/sinay-domain-security.yml
 - type: Authentication

@@ -1,0 +1,180 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/sinay-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 14
+  by_action_class:
+    connected: 10
+    acting: 4
+  by_consequence:
+    read: 10
+    write: 4
+  human_in_the_loop_required: 0
+operations:
+- path: /ports-vessels/api/v1/vessels
+  method: get
+  operationId: getVesselsByName
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ports-vessels/api/v1/ports
+  method: get
+  operationId: getPortsByNameOrCode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ports-vessels/api/v1/usages
+  method: get
+  operationId: getPortsVesselsUsages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /metocean/api/v1/models
+  method: get
+  operationId: retrieveMetoceanModels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /metocean/api/v1/stations
+  method: post
+  operationId: retrieveMetoceanStations
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /metocean/api/v1/usages
+  method: get
+  operationId: getMetoceanUsages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /co2/api/v2/compute-co2
+  method: post
+  operationId: computeCo2
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /co2/api/v2/usages
+  method: get
+  operationId: getCo2Usages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /etac/api/v1/compute-eta
+  method: post
+  operationId: computeEta
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /etac/api/v1/usages
+  method: get
+  operationId: getEtaUsages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /congestion/api/v1/congestion/{portCode}
+  method: get
+  operationId: retrieveCongestionAggregate
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /congestion/api/v1/congestion/batch
+  method: post
+  operationId: retrieveCongestionAggregateBatch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /congestion/api/v1/consumption/current-period
+  method: get
+  operationId: retrieveCurrentConsumptionPeriod
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /congestion/api/v1/consumption/periods
+  method: get
+  operationId: retrieveConsumptionPeriods
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
