@@ -1,0 +1,162 @@
+openapi: 3.0.3
+info:
+  title: Sinay Maritime APIs CO2 Emission API
+  description: 'Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).
+
+    This document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.'
+  version: '1.0'
+  contact:
+    name: Sinay
+    url: https://sinay.ai
+servers:
+- url: https://api.sinay.ai
+  description: Sinay Developers Platform (all products; product base path in each route)
+security:
+- ApiKey: []
+tags:
+- name: CO2 Emission
+  description: Per-voyage CO2 emission computation using vessel-model and GLEC tradelane methods.
+paths:
+  /co2/api/v2/compute-co2:
+    post:
+      operationId: computeCo2
+      tags:
+      - CO2 Emission
+      summary: Retrieve CO2 consumption for a trip from one port to another.
+      description: Computes the CO2 emissions of a TEU for a voyage between two ports. Identify the vessel by IMO or MMSI (not both). Departure and arrival are ports identified by 5-character UN/LOCODE. Returns voyage length in nautical miles and tons of CO2 per TEU for a vessel-model method (Tank-to-Wheel) and a GLEC Framework tradelane method (Well-to-Tank, Tank-to-Wheel, Well-to-Wheel).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComputeCo2Request'
+            example:
+              vessel:
+                imo: 9706906
+                speed: 13.0
+              departure:
+                portCode: FRLEH
+              arrival:
+                portCode: ESBCN
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComputeCo2Response'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    ErrorInfo:
+      type: object
+      required:
+      - errorCode
+      - message
+      - details
+      - time
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+        time:
+          type: string
+          format: date-time
+    ComputeCo2Response:
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/ComputeCo2Request'
+        length:
+          type: number
+          format: double
+          description: Voyage length in nautical miles.
+          example: 1709.7834398908199
+        co2EmissionResult:
+          $ref: '#/components/schemas/Co2EmissionResults'
+    Port:
+      type: object
+      properties:
+        portCode:
+          type: string
+          description: UN/LOCODE (5-character code identifying the port per the UNECE).
+    Vessel:
+      type: object
+      properties:
+        imo:
+          type: integer
+          format: int64
+          description: 'IMO ship identification number: 7 digits.'
+          example: 9706906
+        mmsi:
+          type: integer
+          format: int64
+          description: 'MMSI identifier of the vessel: 9 digits.'
+          example: 215199000
+        speed:
+          type: number
+          format: double
+          description: Average speed in knots, should be under 25.
+          example: 13.0
+    Co2EmissionResults:
+      type: object
+      properties:
+        vesselMethodResult:
+          $ref: '#/components/schemas/Co2MethodResult'
+        tradeLaneMethodResult:
+          $ref: '#/components/schemas/Co2MethodResult'
+    Co2MethodResult:
+      type: object
+      properties:
+        co2Wtt:
+          type: number
+          format: double
+          description: CO2 Well-to-Tank emission in Ton/TEU.
+        co2Ttw:
+          type: number
+          format: double
+          description: CO2 Tank-to-Wheel emission in Ton/TEU.
+        co2Wtw:
+          type: number
+          format: double
+          description: CO2 Well-to-Wheel emission in Ton/TEU.
+        WtwEmissionIntensity:
+          type: number
+          description: CO2 Well-to-Wheel emission in Ton/TEU per kilometer.
+    ComputeCo2Request:
+      type: object
+      properties:
+        vessel:
+          $ref: '#/components/schemas/Vessel'
+        departure:
+          $ref: '#/components/schemas/Port'
+        arrival:
+          $ref: '#/components/schemas/Port'
+  responses:
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+    BadRequest:
+      description: The body in the request is not correct.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: API_KEY
+      description: API key issued by the Sinay Developers Platform, sent in the `API_KEY` request header on every call.

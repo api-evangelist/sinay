@@ -1,0 +1,191 @@
+openapi: 3.0.3
+info:
+  title: Sinay Maritime APIs CO2 Emission Usage API
+  description: 'Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).
+
+    This document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.'
+  version: '1.0'
+  contact:
+    name: Sinay
+    url: https://sinay.ai
+servers:
+- url: https://api.sinay.ai
+  description: Sinay Developers Platform (all products; product base path in each route)
+security:
+- ApiKey: []
+tags:
+- name: Usage
+  description: Monthly API usage and credit-consumption reporting.
+paths:
+  /ports-vessels/api/v1/usages:
+    get:
+      operationId: getPortsVesselsUsages
+      tags:
+      - Usage
+      summary: Retrieve your monthly usages for the Ports and Vessels API.
+      parameters:
+      - $ref: '#/components/parameters/UsageStartTime'
+      - $ref: '#/components/parameters/UsageEndTime'
+      responses:
+        '200':
+          description: Monthly usages.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsagesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /metocean/api/v1/usages:
+    get:
+      operationId: getMetoceanUsages
+      tags:
+      - Usage
+      summary: Retrieve your monthly usages for the Metocean API.
+      parameters:
+      - $ref: '#/components/parameters/UsageStartTime'
+      - $ref: '#/components/parameters/UsageEndTime'
+      responses:
+        '200':
+          description: Monthly usages.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsagesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /co2/api/v2/usages:
+    get:
+      operationId: getCo2Usages
+      tags:
+      - Usage
+      summary: Retrieve your monthly usages for the CO2 Emission API.
+      parameters:
+      - $ref: '#/components/parameters/UsageStartTime'
+      - $ref: '#/components/parameters/UsageEndTime'
+      responses:
+        '200':
+          description: Monthly usages.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsagesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /etac/api/v1/usages:
+    get:
+      operationId: getEtaUsages
+      tags:
+      - Usage
+      summary: Retrieve your monthly usages for the ETA API.
+      parameters:
+      - $ref: '#/components/parameters/UsageStartTime'
+      - $ref: '#/components/parameters/UsageEndTime'
+      responses:
+        '200':
+          description: Monthly usages.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsagesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /congestion/api/v1/consumption/current-period:
+    get:
+      operationId: retrieveCurrentConsumptionPeriod
+      tags:
+      - Usage
+      summary: Retrieve the current credit consumption period.
+      responses:
+        '200':
+          description: The current credit consumption period.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /congestion/api/v1/consumption/periods:
+    get:
+      operationId: retrieveConsumptionPeriods
+      tags:
+      - Usage
+      summary: Retrieve all credit consumption periods.
+      responses:
+        '200':
+          description: All credit consumption periods.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    ErrorInfo:
+      type: object
+      required:
+      - errorCode
+      - message
+      - details
+      - time
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+        time:
+          type: string
+          format: date-time
+    UsagesResponse:
+      type: object
+      properties:
+        allCalls:
+          type: integer
+          format: int64
+        successCalls:
+          type: integer
+          format: int64
+        clientErrorCalls:
+          type: integer
+          format: int64
+        serverErrorCalls:
+          type: integer
+          format: int64
+        consumedApiUnits:
+          type: integer
+          format: int64
+  parameters:
+    UsageStartTime:
+      name: startTime
+      in: query
+      required: false
+      description: Start time at which usages must be found.
+      schema:
+        type: string
+        format: date-time
+    UsageEndTime:
+      name: endTime
+      in: query
+      required: false
+      description: End time at which usages must be found.
+      schema:
+        type: string
+        format: date-time
+  responses:
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: API_KEY
+      description: API key issued by the Sinay Developers Platform, sent in the `API_KEY` request header on every call.

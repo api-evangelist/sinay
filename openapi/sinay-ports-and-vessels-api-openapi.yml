@@ -1,0 +1,126 @@
+openapi: 3.0.3
+info:
+  title: Sinay Maritime APIs CO2 Emission Ports and Vessels API
+  description: 'Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).
+
+    This document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.'
+  version: '1.0'
+  contact:
+    name: Sinay
+    url: https://sinay.ai
+servers:
+- url: https://api.sinay.ai
+  description: Sinay Developers Platform (all products; product base path in each route)
+security:
+- ApiKey: []
+tags:
+- name: Ports and Vessels
+  description: Vessel and port lookup from combined satellite and terrestrial AIS.
+paths:
+  /ports-vessels/api/v1/vessels:
+    get:
+      operationId: getVesselsByName
+      tags:
+      - Ports and Vessels
+      summary: Retrieve a list of vessels from a name, an MMSI or an IMO.
+      description: Returns a list of none/one/several vessels matching the input. Provide at least three characters of the vessel name, or an MMSI / IMO number.
+      parameters:
+      - name: vesselNameOrCode
+        in: query
+        required: true
+        description: At least 3 letters of the vessel name, the MMSI or the IMO.
+        example: cla
+        schema:
+          type: string
+          minLength: 3
+      - name: numberOfResult
+        in: query
+        required: false
+        description: Maximum number of results to return.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of matching vessels.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Default'
+  /ports-vessels/api/v1/ports:
+    get:
+      operationId: getPortsByNameOrCode
+      tags:
+      - Ports and Vessels
+      summary: Retrieve a list of ports from a name or an unlocode.
+      description: Returns a list of ports matching the input. Provide at least three characters of the port name or the port UN/LOCODE.
+      parameters:
+      - name: portNameOrCode
+        in: query
+        required: true
+        description: At least 3 letters of the port name or the port code.
+        example: bal
+        schema:
+          type: string
+          minLength: 3
+      - name: numberOfResult
+        in: query
+        required: false
+        description: Maximum number of results to return.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of matching ports.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Default'
+components:
+  responses:
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+    Default:
+      description: Default error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+  schemas:
+    ErrorInfo:
+      type: object
+      required:
+      - errorCode
+      - message
+      - details
+      - time
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+        time:
+          type: string
+          format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: API_KEY
+      description: API key issued by the Sinay Developers Platform, sent in the `API_KEY` request header on every call.

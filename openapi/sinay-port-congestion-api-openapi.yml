@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: Sinay Maritime APIs CO2 Emission Port Congestion API
+  description: 'Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).
+
+    This document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.'
+  version: '1.0'
+  contact:
+    name: Sinay
+    url: https://sinay.ai
+servers:
+- url: https://api.sinay.ai
+  description: Sinay Developers Platform (all products; product base path in each route)
+security:
+- ApiKey: []
+tags:
+- name: Port Congestion
+  description: Aggregated live port congestion data.
+paths:
+  /congestion/api/v1/congestion/{portCode}:
+    get:
+      operationId: retrieveCongestionAggregate
+      tags:
+      - Port Congestion
+      summary: Retrieve aggregated congestion data for a port.
+      parameters:
+      - name: portCode
+        in: path
+        required: true
+        description: The port code (UN/LOCODE) of the port.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Aggregated congestion data for the port.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Default'
+  /congestion/api/v1/congestion/batch:
+    post:
+      operationId: retrieveCongestionAggregateBatch
+      tags:
+      - Port Congestion
+      summary: Retrieve aggregated congestion data for multiple ports.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - portCodes
+              properties:
+                portCodes:
+                  type: array
+                  minItems: 1
+                  maxItems: 10
+                  description: List of port codes (UN/LOCODE), maximum 10.
+                  items:
+                    type: string
+            example:
+              portCodes:
+              - FRLEH
+              - ESBCN
+      responses:
+        '200':
+          description: Aggregated congestion data for the requested ports.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+    BadRequest:
+      description: The body in the request is not correct.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+    Default:
+      description: Default error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+  schemas:
+    ErrorInfo:
+      type: object
+      required:
+      - errorCode
+      - message
+      - details
+      - time
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+        time:
+          type: string
+          format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: API_KEY
+      description: API key issued by the Sinay Developers Platform, sent in the `API_KEY` request header on every call.

@@ -1,0 +1,134 @@
+openapi: 3.0.3
+info:
+  title: Sinay Maritime APIs CO2 Emission ETA API
+  description: 'Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).
+
+    This document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.'
+  version: '1.0'
+  contact:
+    name: Sinay
+    url: https://sinay.ai
+servers:
+- url: https://api.sinay.ai
+  description: Sinay Developers Platform (all products; product base path in each route)
+security:
+- ApiKey: []
+tags:
+- name: ETA
+  description: Estimated time of arrival prediction for a vessel to a destination port.
+paths:
+  /etac/api/v1/compute-eta:
+    post:
+      operationId: computeEta
+      tags:
+      - ETA
+      summary: ETA computation for a vessel to a destination port.
+      description: Predicts a vessel's estimated time of arrival. Identify the vessel by IMO (or MMSI). With only a vessel and an arrival port, the API selects the latest AIS-transmitted position as the departure point; alternatively supply a departure port and date. Arrival is a port UN/LOCODE. `vessel` and `arrival` are required.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EtaRequest'
+            example:
+              vessel:
+                imo: 9706906
+              departure:
+                date: '2020-01-10T10:00:00.000Z'
+                portCode: FRLEH
+              arrival:
+                portCode: ESBCN
+      responses:
+        '200':
+          description: The predicted ETA.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    ErrorInfo:
+      type: object
+      required:
+      - errorCode
+      - message
+      - details
+      - time
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+        time:
+          type: string
+          format: date-time
+    EtaRequest:
+      type: object
+      required:
+      - vessel
+      - arrival
+      properties:
+        vessel:
+          $ref: '#/components/schemas/Vessel'
+        departure:
+          type: object
+          properties:
+            date:
+              type: string
+              format: date-time
+              description: Departure date/time.
+            portCode:
+              type: string
+              description: Departure port UN/LOCODE.
+        arrival:
+          type: object
+          properties:
+            portCode:
+              type: string
+              description: Arrival port UN/LOCODE.
+    Vessel:
+      type: object
+      properties:
+        imo:
+          type: integer
+          format: int64
+          description: 'IMO ship identification number: 7 digits.'
+          example: 9706906
+        mmsi:
+          type: integer
+          format: int64
+          description: 'MMSI identifier of the vessel: 9 digits.'
+          example: 215199000
+        speed:
+          type: number
+          format: double
+          description: Average speed in knots, should be under 25.
+          example: 13.0
+  responses:
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+    BadRequest:
+      description: The body in the request is not correct.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: API_KEY
+      description: API key issued by the Sinay Developers Platform, sent in the `API_KEY` request header on every call.
