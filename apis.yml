@@ -10,7 +10,20 @@ description: Sinay is a maritime data and analytics company whose Developers Pla
   underwater noise. Every API is called over HTTPS at api.sinay.ai, authenticated
   with a single API_KEY header, and metered as monthly API units / credits with a
   free developer key to start.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: false
+  label: Freemium (free trial) · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sinay.png
 tags:
 - Vessel Tracking
 - AIS
@@ -26,129 +39,114 @@ created: '2026-07-12'
 modified: '2026-07-12'
 specificationVersion: '0.19'
 apis:
-- aid: sinay:sinay-ports-vessels-api
-  name: Sinay Ports and Vessels API
-  tags:
-  - Vessel Tracking
-  - AIS
-  - Ports
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://sinay.ai/en/sinay-hub/ports-and-vessels-api/
-  baseURL: https://api.sinay.ai/ports-vessels/api/v1
-  properties:
-  - url: https://help.sinay.ai/sinay-apis
-    type: Documentation
-  - url: https://api.sinay.ai/doc/index.html
-    type: APIReference
-  - url: openapi/sinay-openapi.yml
-    type: OpenAPI
-  - url: collections/sinay.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sinay.opencollection.json
-    type: OpenCollection
-  description: Look up vessels by name, MMSI, or IMO and ports by name or UN/LOCODE
-    from Sinay's maritime reference data, built on combined satellite and
-    terrestrial AIS. Returns matching vessel and port records for identification and
-    enrichment. GET /vessels, GET /ports, and a /usages endpoint for consumption.
-- aid: sinay:sinay-metocean-api
-  name: Sinay Metocean API
-  tags:
-  - Weather
-  - Ocean Data
-  - Metocean
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://sinay.ai/en/sinay-hub/metocean-api/
-  baseURL: https://api.sinay.ai/metocean/api/v1
-  properties:
-  - url: https://help.sinay.ai/sinay-apis
-    type: Documentation
-  - url: https://api.sinay.ai/doc/index.html
-    type: APIReference
-  - url: openapi/sinay-openapi.yml
-    type: OpenAPI
-  - url: collections/sinay.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sinay.opencollection.json
-    type: OpenCollection
-  description: Retrieve metocean (meteorological and oceanographic) conditions -
-    weather and ocean parameters - for a geographic area and time window from a
-    chosen forecast/hindcast model. GET /models lists available models and
-    POST /stations returns station data for a GeoJSON area, with /usages for
-    consumption.
 - aid: sinay:sinay-co2-emission-api
   name: Sinay CO2 Emission API
+  description: Per-voyage CO2 emission computation using vessel-model and GLEC tradelane methods.
+  humanURL: https://sinay.ai/en/sinay-hub/ports-and-vessels-api/
+  baseURL: https://api.sinay.ai/ports-vessels/api/v1
   tags:
-  - CO2 Emissions
-  - Sustainability
-  - GLEC
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://sinay.ai/en/sinay-hub/co2-api/
-  baseURL: https://api.sinay.ai/co2/api/v2
+  - CO2 Emission
   properties:
-  - url: https://help.sinay.ai/sinay-apis
-    type: Documentation
-  - url: https://api.sinay.ai/doc/index.html
-    type: APIReference
-  - url: openapi/sinay-openapi.yml
-    type: OpenAPI
-  - url: collections/sinay.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sinay.opencollection.json
-    type: OpenCollection
-  description: Compute the CO2 emissions of a container voyage between two ports for
-    a given vessel (by IMO or MMSI), returning voyage length in nautical miles and
-    tons of CO2 per TEU using two methods - a vessel-model method (Tank-to-Wheel)
-    and a GLEC Framework tradelane method (Well-to-Tank, Tank-to-Wheel, and
-    Well-to-Wheel). POST /compute-co2 with a /usages endpoint.
+  - type: OpenAPI
+    url: openapi/sinay-co2-emission-api-openapi.yml
+  - type: Documentation
+    url: https://help.sinay.ai/sinay-apis
+  - type: APIReference
+    url: https://api.sinay.ai/doc/index.html
+  - type: PostmanCollection
+    url: collections/sinay.postman_collection.json
+  - type: OpenCollection
+    url: collections/sinay.opencollection.json
 - aid: sinay:sinay-eta-api
   name: Sinay ETA API
+  description: Estimated time of arrival prediction for a vessel to a destination port.
+  humanURL: https://sinay.ai/en/sinay-hub/ports-and-vessels-api/
+  baseURL: https://api.sinay.ai/ports-vessels/api/v1
   tags:
   - ETA
-  - Vessel Tracking
-  - Predictions
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://sinay.ai/en/sinay-hub/eta-api/
-  baseURL: https://api.sinay.ai/etac/api/v1
   properties:
-  - url: https://help.sinay.ai/sinay-apis
-    type: Documentation
-  - url: https://api.sinay.ai/doc/index.html
-    type: APIReference
-  - url: openapi/sinay-openapi.yml
-    type: OpenAPI
-  - url: collections/sinay.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sinay.opencollection.json
-    type: OpenCollection
-  description: Predict a vessel's estimated time of arrival (ETA) to a destination
-    port. The vessel can be routed from its latest AIS-transmitted position or from
-    a specified departure port and date to an arrival port (UN/LOCODE), using AI and
-    machine-learning models over real-time awareness and historical data.
-    POST /compute-eta with a /usages endpoint.
+  - type: OpenAPI
+    url: openapi/sinay-eta-api-openapi.yml
+  - type: Documentation
+    url: https://help.sinay.ai/sinay-apis
+  - type: APIReference
+    url: https://api.sinay.ai/doc/index.html
+  - type: PostmanCollection
+    url: collections/sinay.postman_collection.json
+  - type: OpenCollection
+    url: collections/sinay.opencollection.json
+- aid: sinay:sinay-metocean-api
+  name: Sinay Metocean API
+  description: Meteorological and oceanographic conditions for an area and time.
+  humanURL: https://sinay.ai/en/sinay-hub/ports-and-vessels-api/
+  baseURL: https://api.sinay.ai/ports-vessels/api/v1
+  tags:
+  - Metocean
+  properties:
+  - type: OpenAPI
+    url: openapi/sinay-metocean-api-openapi.yml
+  - type: Documentation
+    url: https://help.sinay.ai/sinay-apis
+  - type: APIReference
+    url: https://api.sinay.ai/doc/index.html
+  - type: PostmanCollection
+    url: collections/sinay.postman_collection.json
+  - type: OpenCollection
+    url: collections/sinay.opencollection.json
 - aid: sinay:sinay-port-congestion-api
   name: Sinay Port Congestion API
+  description: Aggregated live port congestion data.
+  humanURL: https://sinay.ai/en/sinay-hub/ports-and-vessels-api/
+  baseURL: https://api.sinay.ai/ports-vessels/api/v1
   tags:
   - Port Congestion
-  - Ports
-  - Maritime Data
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://sinay.ai/en/sinay-hub/port-congestion-api/
-  baseURL: https://api.sinay.ai/congestion/api/v1
   properties:
-  - url: https://help.sinay.ai/sinay-apis
-    type: Documentation
-  - url: https://api.sinay.ai/doc/index.html
-    type: APIReference
-  - url: openapi/sinay-openapi.yml
-    type: OpenAPI
-  - url: collections/sinay.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sinay.opencollection.json
-    type: OpenCollection
-  description: Retrieve aggregated live port congestion data for a single port by
-    UN/LOCODE (GET /congestion/{portCode}) or for up to ten ports at once
-    (POST /congestion/batch), plus credit-consumption reporting via
-    /consumption/current-period and /consumption/periods.
+  - type: OpenAPI
+    url: openapi/sinay-port-congestion-api-openapi.yml
+  - type: Documentation
+    url: https://help.sinay.ai/sinay-apis
+  - type: APIReference
+    url: https://api.sinay.ai/doc/index.html
+  - type: PostmanCollection
+    url: collections/sinay.postman_collection.json
+  - type: OpenCollection
+    url: collections/sinay.opencollection.json
+- aid: sinay:sinay-ports-and-vessels-api
+  name: Sinay Ports and Vessels API
+  description: Vessel and port lookup from combined satellite and terrestrial AIS.
+  humanURL: https://sinay.ai/en/sinay-hub/ports-and-vessels-api/
+  baseURL: https://api.sinay.ai/ports-vessels/api/v1
+  tags:
+  - Ports and Vessels
+  properties:
+  - type: OpenAPI
+    url: openapi/sinay-ports-and-vessels-api-openapi.yml
+  - type: Documentation
+    url: https://help.sinay.ai/sinay-apis
+  - type: APIReference
+    url: https://api.sinay.ai/doc/index.html
+  - type: PostmanCollection
+    url: collections/sinay.postman_collection.json
+  - type: OpenCollection
+    url: collections/sinay.opencollection.json
+- aid: sinay:sinay-usage-api
+  name: Sinay Usage API
+  description: Monthly API usage and credit-consumption reporting.
+  humanURL: https://sinay.ai/en/sinay-hub/ports-and-vessels-api/
+  baseURL: https://api.sinay.ai/ports-vessels/api/v1
+  tags:
+  - Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/sinay-usage-api-openapi.yml
+  - type: Documentation
+    url: https://help.sinay.ai/sinay-apis
+  - type: APIReference
+    url: https://api.sinay.ai/doc/index.html
+  - type: PostmanCollection
+    url: collections/sinay.postman_collection.json
+  - type: OpenCollection
+    url: collections/sinay.opencollection.json
 common:
 - type: AgenticAccess
   url: agentic-access/sinay-agentic-access.yml
