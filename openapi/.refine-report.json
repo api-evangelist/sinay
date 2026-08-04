@@ -1,0 +1,24 @@
+{
+  "provider": "sinay",
+  "sources": [
+    "sinay-co2-emission-api-openapi.yml",
+    "sinay-eta-api-openapi.yml",
+    "sinay-metocean-api-openapi.yml",
+    "sinay-port-congestion-api-openapi.yml",
+    "sinay-ports-and-vessels-api-openapi.yml",
+    "sinay-usage-api-openapi.yml"
+  ],
+  "outputs": [
+    "sinay-co2-emission-api-openapi.yml",
+    "sinay-eta-api-openapi.yml",
+    "sinay-metocean-api-openapi.yml",
+    "sinay-port-congestion-api-openapi.yml",
+    "sinay-ports-and-vessels-api-openapi.yml",
+    "sinay-usage-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
