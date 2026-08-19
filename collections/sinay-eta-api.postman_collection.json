@@ -1,0 +1,262 @@
+{
+  "item": [
+    {
+      "id": "84244cc1-c5ed-47fa-81c0-046097a85958",
+      "name": "ETA",
+      "description": {
+        "content": "Estimated time of arrival prediction for a vessel to a destination port.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fc9eec50-967b-4043-8759-a4fd053df48d",
+          "name": "ETA computation for a vessel to a destination port.",
+          "request": {
+            "name": "ETA computation for a vessel to a destination port.",
+            "description": {
+              "content": "Predicts a vessel's estimated time of arrival. Identify the vessel by IMO (or MMSI). With only a vessel and an arrival port, the API selects the latest AIS-transmitted position as the departure point; alternatively supply a departure port and date. Arrival is a port UN/LOCODE. `vessel` and `arrival` are required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "etac",
+                "api",
+                "v1",
+                "compute-eta"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vessel\": {\n    \"imo\": \"<long>\",\n    \"mmsi\": \"<long>\",\n    \"speed\": \"<double>\"\n  },\n  \"arrival\": {\n    \"portCode\": \"<string>\"\n  },\n  \"departure\": {\n    \"date\": \"<dateTime>\",\n    \"portCode\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2b14acb0-8315-4e64-b987-b05079df5c23",
+              "name": "The predicted ETA.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etac",
+                    "api",
+                    "v1",
+                    "compute-eta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vessel\": {\n    \"imo\": 9706906\n  },\n  \"departure\": {\n    \"date\": \"2020-01-10T10:00:00.000Z\",\n    \"portCode\": \"FRLEH\"\n  },\n  \"arrival\": {\n    \"portCode\": \"ESBCN\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44ee32c1-b881-4d90-b218-3faafa269b69",
+              "name": "The body in the request is not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etac",
+                    "api",
+                    "v1",
+                    "compute-eta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vessel\": {\n    \"imo\": 9706906\n  },\n  \"departure\": {\n    \"date\": \"2020-01-10T10:00:00.000Z\",\n    \"portCode\": \"FRLEH\"\n  },\n  \"arrival\": {\n    \"portCode\": \"ESBCN\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 9321,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"2026-05-08T12:56:25.205Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12433909-2a9b-4e56-97d8-0d31288a0211",
+              "name": "The authentication failed (missing or invalid API_KEY).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etac",
+                    "api",
+                    "v1",
+                    "compute-eta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vessel\": {\n    \"imo\": 9706906\n  },\n  \"departure\": {\n    \"date\": \"2020-01-10T10:00:00.000Z\",\n    \"portCode\": \"FRLEH\"\n  },\n  \"arrival\": {\n    \"portCode\": \"ESBCN\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 9102,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"2018-02-09T05:32:45.287Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sinay.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "API_KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "10633524-b25b-45f5-9b5b-6c12a47ab8c2",
+    "name": "Sinay Maritime APIs CO2 Emission ETA API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).\nThis document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.\n\nContact Support:\n Name: Sinay",
+      "type": "text/plain"
+    }
+  }
+}

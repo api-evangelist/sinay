@@ -1,0 +1,262 @@
+{
+  "item": [
+    {
+      "id": "5a29b53a-63cd-4a81-b039-e1a745e60f99",
+      "name": "CO2 Emission",
+      "description": {
+        "content": "Per-voyage CO2 emission computation using vessel-model and GLEC tradelane methods.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "992b60c1-884e-4964-9c73-18a0fe66e7e0",
+          "name": "Retrieve CO2 consumption for a trip from one port to another.",
+          "request": {
+            "name": "Retrieve CO2 consumption for a trip from one port to another.",
+            "description": {
+              "content": "Computes the CO2 emissions of a TEU for a voyage between two ports. Identify the vessel by IMO or MMSI (not both). Departure and arrival are ports identified by 5-character UN/LOCODE. Returns voyage length in nautical miles and tons of CO2 per TEU for a vessel-model method (Tank-to-Wheel) and a GLEC Framework tradelane method (Well-to-Tank, Tank-to-Wheel, Well-to-Wheel).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "co2",
+                "api",
+                "v2",
+                "compute-co2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vessel\": {\n    \"imo\": \"<long>\",\n    \"mmsi\": \"<long>\",\n    \"speed\": \"<double>\"\n  },\n  \"departure\": {\n    \"portCode\": \"<string>\"\n  },\n  \"arrival\": {\n    \"portCode\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a853361d-635d-4205-a9b3-0f90ad37dade",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "co2",
+                    "api",
+                    "v2",
+                    "compute-co2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vessel\": {\n    \"imo\": 9706906,\n    \"speed\": 13\n  },\n  \"departure\": {\n    \"portCode\": \"FRLEH\"\n  },\n  \"arrival\": {\n    \"portCode\": \"ESBCN\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"input\": {\n    \"vessel\": {\n      \"imo\": 9706906,\n      \"mmsi\": 215199000,\n      \"speed\": 13\n    },\n    \"departure\": {\n      \"portCode\": \"<string>\"\n    },\n    \"arrival\": {\n      \"portCode\": \"<string>\"\n    }\n  },\n  \"length\": 1709.7834398908199,\n  \"co2EmissionResult\": {\n    \"vesselMethodResult\": {\n      \"co2Wtt\": 202.2361311356824,\n      \"co2Ttw\": 490.9718509080874,\n      \"co2Wtw\": 8396.03693976238,\n      \"WtwEmissionIntensity\": 7200.247434234349\n    },\n    \"tradeLaneMethodResult\": {\n      \"co2Wtt\": 3734.0804374791683,\n      \"co2Ttw\": 7445.820173355274,\n      \"co2Wtw\": 1539.559090965421,\n      \"WtwEmissionIntensity\": 5553.608674224645\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cad8b4c-a0d6-4f11-aee7-3dbd45dc262d",
+              "name": "The body in the request is not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "co2",
+                    "api",
+                    "v2",
+                    "compute-co2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vessel\": {\n    \"imo\": 9706906,\n    \"speed\": 13\n  },\n  \"departure\": {\n    \"portCode\": \"FRLEH\"\n  },\n  \"arrival\": {\n    \"portCode\": \"ESBCN\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 1476,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"2008-11-05T21:47:53.340Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2d00115-f365-4178-b004-19e147c1e7ea",
+              "name": "The authentication failed (missing or invalid API_KEY).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "co2",
+                    "api",
+                    "v2",
+                    "compute-co2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vessel\": {\n    \"imo\": 9706906,\n    \"speed\": 13\n  },\n  \"departure\": {\n    \"portCode\": \"FRLEH\"\n  },\n  \"arrival\": {\n    \"portCode\": \"ESBCN\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 1494,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"2019-04-06T05:07:39.911Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sinay.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "API_KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6553087b-88a6-452b-b26c-2f420b72e1dc",
+    "name": "Sinay Maritime APIs CO2 Emission API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).\nThis document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.\n\nContact Support:\n Name: Sinay",
+      "type": "text/plain"
+    }
+  }
+}

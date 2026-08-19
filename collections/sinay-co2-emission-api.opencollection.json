@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sinay Maritime APIs CO2 Emission API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CO2 Emission",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve CO2 consumption for a trip from one port to another.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sinay.ai/co2/api/v2/compute-co2",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Computes the CO2 emissions of a TEU for a voyage between two ports. Identify the vessel by IMO or MMSI (not both). Departure and arrival are ports identified by 5-character UN/LOCODE. Returns voyage length in nautical miles and tons of CO2 per TEU for a vessel-model method (Tank-to-Wheel) and a GLEC Framework tradelane method (Well-to-Tank, Tank-to-Wheel, Well-to-Wheel)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

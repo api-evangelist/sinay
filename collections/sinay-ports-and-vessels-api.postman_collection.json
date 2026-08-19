@@ -1,0 +1,481 @@
+{
+  "item": [
+    {
+      "id": "8eca6db2-17a7-4dd8-bb3a-847a7b889d78",
+      "name": "Ports and Vessels",
+      "description": {
+        "content": "Vessel and port lookup from combined satellite and terrestrial AIS.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "09a799bc-f2bd-4c40-abb2-30bbf49cb9f8",
+          "name": "Retrieve a list of vessels from a name, an MMSI or an IMO.",
+          "request": {
+            "name": "Retrieve a list of vessels from a name, an MMSI or an IMO.",
+            "description": {
+              "content": "Returns a list of none/one/several vessels matching the input. Provide at least three characters of the vessel name, or an MMSI / IMO number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports-vessels",
+                "api",
+                "v1",
+                "vessels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "vesselNameOrCode",
+                  "value": "<string>",
+                  "description": "(Required) At least 3 letters of the vessel name, the MMSI or the IMO."
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfResult",
+                  "value": "<integer>",
+                  "description": "Maximum number of results to return."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cec904df-6ca2-4eb4-b400-54012d7c4551",
+              "name": "A list of matching vessels.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports-vessels",
+                    "api",
+                    "v1",
+                    "vessels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vesselNameOrCode",
+                      "value": "cla"
+                    },
+                    {
+                      "key": "numberOfResult",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4acbbaf-e26b-478e-9397-36d432d8cd6b",
+              "name": "The authentication failed (missing or invalid API_KEY).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports-vessels",
+                    "api",
+                    "v1",
+                    "vessels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vesselNameOrCode",
+                      "value": "cla"
+                    },
+                    {
+                      "key": "numberOfResult",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 3700,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"1990-02-28T03:47:33.720Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91557432-57cd-4cb0-a0dd-650d11cf2deb",
+              "name": "Default error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports-vessels",
+                    "api",
+                    "v1",
+                    "vessels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vesselNameOrCode",
+                      "value": "cla"
+                    },
+                    {
+                      "key": "numberOfResult",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 8185,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"1949-09-01T19:14:18.896Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a8579b5-222b-4864-b3a6-bbac6acae568",
+          "name": "Retrieve a list of ports from a name or an unlocode.",
+          "request": {
+            "name": "Retrieve a list of ports from a name or an unlocode.",
+            "description": {
+              "content": "Returns a list of ports matching the input. Provide at least three characters of the port name or the port UN/LOCODE.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports-vessels",
+                "api",
+                "v1",
+                "ports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "portNameOrCode",
+                  "value": "<string>",
+                  "description": "(Required) At least 3 letters of the port name or the port code."
+                },
+                {
+                  "disabled": false,
+                  "key": "numberOfResult",
+                  "value": "<integer>",
+                  "description": "Maximum number of results to return."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7b43e3ef-03fc-4c93-8ccc-4562d55c39e2",
+              "name": "A list of matching ports.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports-vessels",
+                    "api",
+                    "v1",
+                    "ports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portNameOrCode",
+                      "value": "bal"
+                    },
+                    {
+                      "key": "numberOfResult",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4dddfb4-4e3f-47b7-8379-b624f4bd1ad6",
+              "name": "The authentication failed (missing or invalid API_KEY).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports-vessels",
+                    "api",
+                    "v1",
+                    "ports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portNameOrCode",
+                      "value": "bal"
+                    },
+                    {
+                      "key": "numberOfResult",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 8185,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"1949-09-01T19:14:18.896Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8af07bc6-4608-4050-ac8d-ec4c9a790141",
+              "name": "Default error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports-vessels",
+                    "api",
+                    "v1",
+                    "ports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portNameOrCode",
+                      "value": "bal"
+                    },
+                    {
+                      "key": "numberOfResult",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 8185,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"1949-09-01T19:14:18.896Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sinay.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "API_KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d53caf37-a40f-460a-8339-1329aa20d929",
+    "name": "Sinay Maritime APIs CO2 Emission Ports and Vessels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).\nThis document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.\n\nContact Support:\n Name: Sinay",
+      "type": "text/plain"
+    }
+  }
+}

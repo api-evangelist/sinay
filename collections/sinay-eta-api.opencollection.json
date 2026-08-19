@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sinay Maritime APIs CO2 Emission ETA API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ETA",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ETA computation for a vessel to a destination port.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sinay.ai/etac/api/v1/compute-eta",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Predicts a vessel's estimated time of arrival. Identify the vessel by IMO (or MMSI). With only a vessel and an arrival port, the API selects the latest AIS-transmitted position as the departure point; alternatively supply a departure port and date. Arrival is a port UN/LOCODE. `vessel` and `arrival` are required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

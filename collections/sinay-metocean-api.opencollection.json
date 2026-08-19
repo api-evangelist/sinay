@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sinay Maritime APIs CO2 Emission Metocean API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metocean",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve available metocean models.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/metocean/api/v1/models"
+          },
+          "docs": "Retrieve available metocean models."
+        },
+        {
+          "info": {
+            "name": "Retrieve metocean stations for an area, time, and model.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sinay.ai/metocean/api/v1/stations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns metocean station data for a geographic area (GeoJSON), a time window, and a chosen model. `area`, `time`, and `model` are required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

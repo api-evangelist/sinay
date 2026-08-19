@@ -1,0 +1,148 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sinay Maritime APIs CO2 Emission Usage API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Usage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve your monthly usages for the Ports and Vessels API.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/ports-vessels/api/v1/usages",
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Start time at which usages must be found."
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "End time at which usages must be found."
+              }
+            ]
+          },
+          "docs": "Retrieve your monthly usages for the Ports and Vessels API."
+        },
+        {
+          "info": {
+            "name": "Retrieve your monthly usages for the Metocean API.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/metocean/api/v1/usages",
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Start time at which usages must be found."
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "End time at which usages must be found."
+              }
+            ]
+          },
+          "docs": "Retrieve your monthly usages for the Metocean API."
+        },
+        {
+          "info": {
+            "name": "Retrieve your monthly usages for the CO2 Emission API.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/co2/api/v2/usages",
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Start time at which usages must be found."
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "End time at which usages must be found."
+              }
+            ]
+          },
+          "docs": "Retrieve your monthly usages for the CO2 Emission API."
+        },
+        {
+          "info": {
+            "name": "Retrieve your monthly usages for the ETA API.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/etac/api/v1/usages",
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Start time at which usages must be found."
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "End time at which usages must be found."
+              }
+            ]
+          },
+          "docs": "Retrieve your monthly usages for the ETA API."
+        },
+        {
+          "info": {
+            "name": "Retrieve the current credit consumption period.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/congestion/api/v1/consumption/current-period"
+          },
+          "docs": "Retrieve the current credit consumption period."
+        },
+        {
+          "info": {
+            "name": "Retrieve all credit consumption periods.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/congestion/api/v1/consumption/periods"
+          },
+          "docs": "Retrieve all credit consumption periods."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

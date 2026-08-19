@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sinay Maritime APIs CO2 Emission Port Congestion API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Port Congestion",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve aggregated congestion data for a port.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/congestion/api/v1/congestion/:portCode",
+            "params": [
+              {
+                "name": "portCode",
+                "value": "",
+                "type": "path",
+                "description": "The port code (UN/LOCODE) of the port."
+              }
+            ]
+          },
+          "docs": "Retrieve aggregated congestion data for a port."
+        },
+        {
+          "info": {
+            "name": "Retrieve aggregated congestion data for multiple ports.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sinay.ai/congestion/api/v1/congestion/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve aggregated congestion data for multiple ports."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sinay Maritime APIs CO2 Emission Ports and Vessels API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ports and Vessels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a list of vessels from a name, an MMSI or an IMO.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/ports-vessels/api/v1/vessels",
+            "params": [
+              {
+                "name": "vesselNameOrCode",
+                "value": "cla",
+                "type": "query",
+                "description": "At least 3 letters of the vessel name, the MMSI or the IMO."
+              },
+              {
+                "name": "numberOfResult",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return."
+              }
+            ]
+          },
+          "docs": "Returns a list of none/one/several vessels matching the input. Provide at least three characters of the vessel name, or an MMSI / IMO number."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of ports from a name or an unlocode.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sinay.ai/ports-vessels/api/v1/ports",
+            "params": [
+              {
+                "name": "portNameOrCode",
+                "value": "bal",
+                "type": "query",
+                "description": "At least 3 letters of the port name or the port code."
+              },
+              {
+                "name": "numberOfResult",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return."
+              }
+            ]
+          },
+          "docs": "Returns a list of ports matching the input. Provide at least three characters of the port name or the port UN/LOCODE."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

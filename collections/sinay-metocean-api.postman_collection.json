@@ -1,0 +1,389 @@
+{
+  "item": [
+    {
+      "id": "e9138367-1e3b-47b3-b4fc-0e6a9479fb6c",
+      "name": "Metocean",
+      "description": {
+        "content": "Meteorological and oceanographic conditions for an area and time.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b628eb50-a047-49b6-8b33-f8ffb61bf813",
+          "name": "Retrieve available metocean models.",
+          "request": {
+            "name": "Retrieve available metocean models.",
+            "description": {},
+            "url": {
+              "path": [
+                "metocean",
+                "api",
+                "v1",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d98beaf6-d8d5-4aac-9277-1e039c2579dd",
+              "name": "The list of available metocean models.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metocean",
+                    "api",
+                    "v1",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16ac763d-79ed-4a1c-925d-9ba7003060e8",
+              "name": "The authentication failed (missing or invalid API_KEY).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metocean",
+                    "api",
+                    "v1",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 7478,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"2014-07-05T12:33:34.605Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5621772-fd1f-49cc-8add-9a998ef7939d",
+          "name": "Retrieve metocean stations for an area, time, and model.",
+          "request": {
+            "name": "Retrieve metocean stations for an area, time, and model.",
+            "description": {
+              "content": "Returns metocean station data for a geographic area (GeoJSON), a time window, and a chosen model. `area`, `time`, and `model` are required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metocean",
+                "api",
+                "v1",
+                "stations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"area\": \"<object>\",\n  \"time\": \"<object>\",\n  \"model\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7f8b12dc-6453-4bc2-aba5-07b69b4c7700",
+              "name": "Metocean station data for the requested area.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metocean",
+                    "api",
+                    "v1",
+                    "stations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"area\": {\n    \"geoJson\": {\n      \"type\": \"Polygon\",\n      \"coordinates\": [\n        [\n          [\n            35.5,\n            -55.7\n          ],\n          [\n            36.2,\n            -65.5\n          ],\n          [\n            65,\n            -64.9\n          ],\n          [\n            64.6,\n            -55.1\n          ],\n          [\n            35.5,\n            -55.7\n          ]\n        ]\n      ]\n    }\n  },\n  \"time\": {\n    \"start\": \"2022-05-01T00:00:00.000Z\",\n    \"end\": \"2022-05-02T00:00:00.000Z\"\n  },\n  \"model\": {\n    \"name\": \"default\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18dc22e8-98db-4ef8-93d0-141a2bb3e364",
+              "name": "The body in the request is not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metocean",
+                    "api",
+                    "v1",
+                    "stations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"area\": {\n    \"geoJson\": {\n      \"type\": \"Polygon\",\n      \"coordinates\": [\n        [\n          [\n            35.5,\n            -55.7\n          ],\n          [\n            36.2,\n            -65.5\n          ],\n          [\n            65,\n            -64.9\n          ],\n          [\n            64.6,\n            -55.1\n          ],\n          [\n            35.5,\n            -55.7\n          ]\n        ]\n      ]\n    }\n  },\n  \"time\": {\n    \"start\": \"2022-05-01T00:00:00.000Z\",\n    \"end\": \"2022-05-02T00:00:00.000Z\"\n  },\n  \"model\": {\n    \"name\": \"default\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 9302,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"1986-10-17T09:38:36.925Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "970cd22f-2ec2-4502-bc49-95c8074d8756",
+              "name": "The authentication failed (missing or invalid API_KEY).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metocean",
+                    "api",
+                    "v1",
+                    "stations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"area\": {\n    \"geoJson\": {\n      \"type\": \"Polygon\",\n      \"coordinates\": [\n        [\n          [\n            35.5,\n            -55.7\n          ],\n          [\n            36.2,\n            -65.5\n          ],\n          [\n            65,\n            -64.9\n          ],\n          [\n            64.6,\n            -55.1\n          ],\n          [\n            35.5,\n            -55.7\n          ]\n        ]\n      ]\n    }\n  },\n  \"time\": {\n    \"start\": \"2022-05-01T00:00:00.000Z\",\n    \"end\": \"2022-05-02T00:00:00.000Z\"\n  },\n  \"model\": {\n    \"name\": \"default\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": 9302,\n  \"message\": \"string\",\n  \"details\": [\n    \"string\",\n    \"string\"\n  ],\n  \"time\": \"1986-10-17T09:38:36.925Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sinay.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "API_KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1d7d24e3-46fa-436d-89a4-828a7692cebf",
+    "name": "Sinay Maritime APIs CO2 Emission Metocean API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).\nThis document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.\n\nContact Support:\n Name: Sinay",
+      "type": "text/plain"
+    }
+  }
+}
