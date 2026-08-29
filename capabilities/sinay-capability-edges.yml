@@ -1,0 +1,34 @@
+slug: sinay
+provider: Sinay
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: ETA
+  spec_file: sinay-eta-api-openapi.yml
+  capability_id: BC-2510.30
+  capability_id_l1: BC-2510
+  capability_name: ETA Prediction Management
+  confidence: 0.9
+  evidence: POST /etac/api/v1/compute-eta computeEta 'ETA computation for a vessel to a destination port.'
+  reason: Operation performs estimated-time-of-arrival prediction for a vessel to a destination port,
+    which is exactly ETA prediction management within shipment visibility.
+- tag: CO2 Emission
+  spec_file: sinay-co2-emission-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.8
+  evidence: POST /co2/api/v2/compute-co2 computeCo2 'Retrieve CO2 consumption for a trip from one port
+    to another'; schema Co2EmissionResults
+  reason: Computes per-voyage CO2 emissions (GLEC-based) for transport legs, i.e. carbon footprint calculation
+    feeding climate/carbon accounting and disclosure.

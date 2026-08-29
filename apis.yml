@@ -160,6 +160,9 @@ apis:
   - type: OpenCollection
     url: collections/sinay.opencollection.json
 common:
+- type: CapabilityMap
+  url: capabilities/sinay-capability-edges.yml
+  name: Sinay Business Capability Map
 - type: AgenticAccess
   url: agentic-access/sinay-agentic-access.yml
 - type: DomainSecurity
