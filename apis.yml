@@ -10,6 +10,18 @@ description: Sinay is a maritime data and analytics company whose Developers Pla
   underwater noise. Every API is called over HTTPS at api.sinay.ai, authenticated
   with a single API_KEY header, and metered as monthly API units / credits with a
   free developer key to start.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
