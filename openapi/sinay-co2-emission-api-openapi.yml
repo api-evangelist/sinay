@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Sinay Maritime APIs CO2 Emission API
-  description: 'Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).
-
-    This document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.'
+  title: Sinay Maritime CO2 Emission API
+  description: Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion.
   version: '1.0'
   contact:
     name: Sinay
@@ -22,7 +20,7 @@ paths:
       operationId: computeCo2
       tags:
       - CO2 Emission
-      summary: Retrieve CO2 consumption for a trip from one port to another.
+      summary: Retrieve CO2 consumption for a trip from one port to another
       description: Computes the CO2 emissions of a TEU for a voyage between two ports. Identify the vessel by IMO or MMSI (not both). Departure and arrival are ports identified by 5-character UN/LOCODE. Returns voyage length in nautical miles and tons of CO2 per TEU for a vessel-model method (Tank-to-Wheel) and a GLEC Framework tradelane method (Well-to-Tank, Tank-to-Wheel, Well-to-Wheel).
       requestBody:
         required: true
@@ -51,6 +49,76 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    Co2EmissionResults:
+      type: object
+      properties:
+        vesselMethodResult:
+          $ref: '#/components/schemas/Co2MethodResult'
+        tradeLaneMethodResult:
+          $ref: '#/components/schemas/Co2MethodResult'
+    Vessel:
+      type: object
+      properties:
+        imo:
+          type: integer
+          format: int64
+          description: 'IMO ship identification number: 7 digits.'
+          example: 9706906
+        mmsi:
+          type: integer
+          format: int64
+          description: 'MMSI identifier of the vessel: 9 digits.'
+          example: 215199000
+        speed:
+          type: number
+          format: double
+          description: Average speed in knots, should be under 25.
+          example: 13.0
+    Co2MethodResult:
+      type: object
+      properties:
+        co2Wtt:
+          type: number
+          format: double
+          description: CO2 Well-to-Tank emission in Ton/TEU.
+        co2Ttw:
+          type: number
+          format: double
+          description: CO2 Tank-to-Wheel emission in Ton/TEU.
+        co2Wtw:
+          type: number
+          format: double
+          description: CO2 Well-to-Wheel emission in Ton/TEU.
+        WtwEmissionIntensity:
+          type: number
+          description: CO2 Well-to-Wheel emission in Ton/TEU per kilometer.
+    Port:
+      type: object
+      properties:
+        portCode:
+          type: string
+          description: UN/LOCODE (5-character code identifying the port per the UNECE).
+    ComputeCo2Request:
+      type: object
+      properties:
+        vessel:
+          $ref: '#/components/schemas/Vessel'
+        departure:
+          $ref: '#/components/schemas/Port'
+        arrival:
+          $ref: '#/components/schemas/Port'
+    ComputeCo2Response:
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/ComputeCo2Request'
+        length:
+          type: number
+          format: double
+          description: Voyage length in nautical miles.
+          example: 1709.7834398908199
+        co2EmissionResult:
+          $ref: '#/components/schemas/Co2EmissionResults'
     ErrorInfo:
       type: object
       required:
@@ -71,85 +139,15 @@ components:
         time:
           type: string
           format: date-time
-    ComputeCo2Response:
-      type: object
-      properties:
-        input:
-          $ref: '#/components/schemas/ComputeCo2Request'
-        length:
-          type: number
-          format: double
-          description: Voyage length in nautical miles.
-          example: 1709.7834398908199
-        co2EmissionResult:
-          $ref: '#/components/schemas/Co2EmissionResults'
-    Port:
-      type: object
-      properties:
-        portCode:
-          type: string
-          description: UN/LOCODE (5-character code identifying the port per the UNECE).
-    Vessel:
-      type: object
-      properties:
-        imo:
-          type: integer
-          format: int64
-          description: 'IMO ship identification number: 7 digits.'
-          example: 9706906
-        mmsi:
-          type: integer
-          format: int64
-          description: 'MMSI identifier of the vessel: 9 digits.'
-          example: 215199000
-        speed:
-          type: number
-          format: double
-          description: Average speed in knots, should be under 25.
-          example: 13.0
-    Co2EmissionResults:
-      type: object
-      properties:
-        vesselMethodResult:
-          $ref: '#/components/schemas/Co2MethodResult'
-        tradeLaneMethodResult:
-          $ref: '#/components/schemas/Co2MethodResult'
-    Co2MethodResult:
-      type: object
-      properties:
-        co2Wtt:
-          type: number
-          format: double
-          description: CO2 Well-to-Tank emission in Ton/TEU.
-        co2Ttw:
-          type: number
-          format: double
-          description: CO2 Tank-to-Wheel emission in Ton/TEU.
-        co2Wtw:
-          type: number
-          format: double
-          description: CO2 Well-to-Wheel emission in Ton/TEU.
-        WtwEmissionIntensity:
-          type: number
-          description: CO2 Well-to-Wheel emission in Ton/TEU per kilometer.
-    ComputeCo2Request:
-      type: object
-      properties:
-        vessel:
-          $ref: '#/components/schemas/Vessel'
-        departure:
-          $ref: '#/components/schemas/Port'
-        arrival:
-          $ref: '#/components/schemas/Port'
   responses:
-    Unauthorized:
-      description: The authentication failed (missing or invalid API_KEY).
+    BadRequest:
+      description: The body in the request is not correct.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorInfo'
-    BadRequest:
-      description: The body in the request is not correct.
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
       content:
         application/json:
           schema:

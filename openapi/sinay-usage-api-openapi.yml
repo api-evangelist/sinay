@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Sinay Maritime APIs CO2 Emission Usage API
-  description: 'Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).
-
-    This document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.'
+  title: Sinay Maritime Usage API
+  description: Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion.
   version: '1.0'
   contact:
     name: Sinay
@@ -22,7 +20,7 @@ paths:
       operationId: getPortsVesselsUsages
       tags:
       - Usage
-      summary: Retrieve your monthly usages for the Ports and Vessels API.
+      summary: Retrieve your monthly usages for the Ports and Vessels API
       parameters:
       - $ref: '#/components/parameters/UsageStartTime'
       - $ref: '#/components/parameters/UsageEndTime'
@@ -40,7 +38,7 @@ paths:
       operationId: getMetoceanUsages
       tags:
       - Usage
-      summary: Retrieve your monthly usages for the Metocean API.
+      summary: Retrieve your monthly usages for the Metocean API
       parameters:
       - $ref: '#/components/parameters/UsageStartTime'
       - $ref: '#/components/parameters/UsageEndTime'
@@ -58,7 +56,7 @@ paths:
       operationId: getCo2Usages
       tags:
       - Usage
-      summary: Retrieve your monthly usages for the CO2 Emission API.
+      summary: Retrieve your monthly usages for the CO2 Emission API
       parameters:
       - $ref: '#/components/parameters/UsageStartTime'
       - $ref: '#/components/parameters/UsageEndTime'
@@ -76,7 +74,7 @@ paths:
       operationId: getEtaUsages
       tags:
       - Usage
-      summary: Retrieve your monthly usages for the ETA API.
+      summary: Retrieve your monthly usages for the ETA API
       parameters:
       - $ref: '#/components/parameters/UsageStartTime'
       - $ref: '#/components/parameters/UsageEndTime'
@@ -94,7 +92,7 @@ paths:
       operationId: retrieveCurrentConsumptionPeriod
       tags:
       - Usage
-      summary: Retrieve the current credit consumption period.
+      summary: Retrieve the current credit consumption period
       responses:
         '200':
           description: The current credit consumption period.
@@ -109,7 +107,7 @@ paths:
       operationId: retrieveConsumptionPeriods
       tags:
       - Usage
-      summary: Retrieve all credit consumption periods.
+      summary: Retrieve all credit consumption periods
       responses:
         '200':
           description: All credit consumption periods.
@@ -120,6 +118,30 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    UsageStartTime:
+      name: startTime
+      in: query
+      required: false
+      description: Start time at which usages must be found.
+      schema:
+        type: string
+        format: date-time
+    UsageEndTime:
+      name: endTime
+      in: query
+      required: false
+      description: End time at which usages must be found.
+      schema:
+        type: string
+        format: date-time
+  responses:
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
   schemas:
     ErrorInfo:
       type: object
@@ -159,30 +181,6 @@ components:
         consumedApiUnits:
           type: integer
           format: int64
-  parameters:
-    UsageStartTime:
-      name: startTime
-      in: query
-      required: false
-      description: Start time at which usages must be found.
-      schema:
-        type: string
-        format: date-time
-    UsageEndTime:
-      name: endTime
-      in: query
-      required: false
-      description: End time at which usages must be found.
-      schema:
-        type: string
-        format: date-time
-  responses:
-    Unauthorized:
-      description: The authentication failed (missing or invalid API_KEY).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
   securitySchemes:
     ApiKey:
       type: apiKey

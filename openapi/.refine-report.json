@@ -1,12 +1,7 @@
 {
   "provider": "sinay",
   "sources": [
-    "sinay-co2-emission-api-openapi.yml",
-    "sinay-eta-api-openapi.yml",
-    "sinay-metocean-api-openapi.yml",
-    "sinay-port-congestion-api-openapi.yml",
-    "sinay-ports-and-vessels-api-openapi.yml",
-    "sinay-usage-api-openapi.yml"
+    "_original/sinay-openapi.yml"
   ],
   "outputs": [
     "sinay-co2-emission-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sinay-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "sinay-co2-emission-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinay-eta-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinay-metocean-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinay-port-congestion-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinay-ports-and-vessels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinay-usage-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

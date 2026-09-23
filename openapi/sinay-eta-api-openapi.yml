@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Sinay Maritime APIs CO2 Emission ETA API
-  description: 'Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion. Every Sinay API is served over HTTPS from the single host api.sinay.ai, with each product mounted under its own versioned base path (for example `/co2/api/v2` or `/ports-vessels/api/v1`). All endpoints require an API key passed in an `API_KEY` request header; get a free key from the Sinay Developers Platform (https://developers.sinay.ai/).
-
-    This document consolidates the individual per-product Swagger files published live at https://api.sinay.ai/<product>/api/<version>/swagger.yaml (confirmed 2026-07-12). Paths, methods, the API_KEY security scheme, and the CO2 / ETA / congestion request and response shapes below are taken directly from those live specs. Where a request or response body is only summarized here rather than fully expanded, consult the upstream per-product Swagger.'
+  title: Sinay Maritime ETA API
+  description: Consolidated OpenAPI description of five Sinay Developers Platform APIs - Ports and Vessels, Metocean, CO2 Emission, ETA (ETAC), and Port Congestion.
   version: '1.0'
   contact:
     name: Sinay
@@ -22,7 +20,7 @@ paths:
       operationId: computeEta
       tags:
       - ETA
-      summary: ETA computation for a vessel to a destination port.
+      summary: ETA computation for a vessel to a destination port
       description: Predicts a vessel's estimated time of arrival. Identify the vessel by IMO (or MMSI). With only a vessel and an arrival port, the API selects the latest AIS-transmitted position as the departure point; alternatively supply a departure port and date. Arrival is a port UN/LOCODE. `vessel` and `arrival` are required.
       requestBody:
         required: true
@@ -50,27 +48,38 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    BadRequest:
+      description: The body in the request is not correct.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
   schemas:
-    ErrorInfo:
+    Vessel:
       type: object
-      required:
-      - errorCode
-      - message
-      - details
-      - time
       properties:
-        errorCode:
+        imo:
           type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: string
-        time:
-          type: string
-          format: date-time
+          format: int64
+          description: 'IMO ship identification number: 7 digits.'
+          example: 9706906
+        mmsi:
+          type: integer
+          format: int64
+          description: 'MMSI identifier of the vessel: 9 digits.'
+          example: 215199000
+        speed:
+          type: number
+          format: double
+          description: Average speed in knots, should be under 25.
+          example: 13.0
     EtaRequest:
       type: object
       required:
@@ -95,37 +104,26 @@ components:
             portCode:
               type: string
               description: Arrival port UN/LOCODE.
-    Vessel:
+    ErrorInfo:
       type: object
+      required:
+      - errorCode
+      - message
+      - details
+      - time
       properties:
-        imo:
+        errorCode:
           type: integer
-          format: int64
-          description: 'IMO ship identification number: 7 digits.'
-          example: 9706906
-        mmsi:
-          type: integer
-          format: int64
-          description: 'MMSI identifier of the vessel: 9 digits.'
-          example: 215199000
-        speed:
-          type: number
-          format: double
-          description: Average speed in knots, should be under 25.
-          example: 13.0
-  responses:
-    Unauthorized:
-      description: The authentication failed (missing or invalid API_KEY).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
-    BadRequest:
-      description: The body in the request is not correct.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+        time:
+          type: string
+          format: date-time
   securitySchemes:
     ApiKey:
       type: apiKey
