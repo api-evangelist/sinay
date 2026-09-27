@@ -62,24 +62,6 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorInfo'
   schemas:
-    Vessel:
-      type: object
-      properties:
-        imo:
-          type: integer
-          format: int64
-          description: 'IMO ship identification number: 7 digits.'
-          example: 9706906
-        mmsi:
-          type: integer
-          format: int64
-          description: 'MMSI identifier of the vessel: 9 digits.'
-          example: 215199000
-        speed:
-          type: number
-          format: double
-          description: Average speed in knots, should be under 25.
-          example: 13.0
     EtaRequest:
       type: object
       required:
@@ -124,6 +106,24 @@ components:
         time:
           type: string
           format: date-time
+    Vessel:
+      type: object
+      properties:
+        imo:
+          type: integer
+          format: int64
+          description: 'IMO ship identification number: 7 digits.'
+          example: 9706906
+        mmsi:
+          type: integer
+          format: int64
+          description: 'MMSI identifier of the vessel: 9 digits.'
+          example: 215199000
+        speed:
+          type: number
+          format: double
+          description: Average speed in knots, should be under 25.
+          example: 13.0
   securitySchemes:
     ApiKey:
       type: apiKey
