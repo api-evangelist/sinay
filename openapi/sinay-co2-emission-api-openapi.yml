@@ -79,12 +79,6 @@ components:
           example: 1709.7834398908199
         co2EmissionResult:
           $ref: '#/components/schemas/Co2EmissionResults'
-    Port:
-      type: object
-      properties:
-        portCode:
-          type: string
-          description: UN/LOCODE (5-character code identifying the port per the UNECE).
     ErrorInfo:
       type: object
       required:
@@ -105,13 +99,6 @@ components:
         time:
           type: string
           format: date-time
-    Co2EmissionResults:
-      type: object
-      properties:
-        vesselMethodResult:
-          $ref: '#/components/schemas/Co2MethodResult'
-        tradeLaneMethodResult:
-          $ref: '#/components/schemas/Co2MethodResult'
     Vessel:
       type: object
       properties:
@@ -130,6 +117,19 @@ components:
           format: double
           description: Average speed in knots, should be under 25.
           example: 13.0
+    Port:
+      type: object
+      properties:
+        portCode:
+          type: string
+          description: UN/LOCODE (5-character code identifying the port per the UNECE).
+    Co2EmissionResults:
+      type: object
+      properties:
+        vesselMethodResult:
+          $ref: '#/components/schemas/Co2MethodResult'
+        tradeLaneMethodResult:
+          $ref: '#/components/schemas/Co2MethodResult'
     ComputeCo2Request:
       type: object
       properties:
@@ -140,14 +140,14 @@ components:
         arrival:
           $ref: '#/components/schemas/Port'
   responses:
-    Unauthorized:
-      description: The authentication failed (missing or invalid API_KEY).
+    BadRequest:
+      description: The body in the request is not correct.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorInfo'
-    BadRequest:
-      description: The body in the request is not correct.
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
       content:
         application/json:
           schema:

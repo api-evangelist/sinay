@@ -48,19 +48,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: The body in the request is not correct.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
-    Unauthorized:
-      description: The authentication failed (missing or invalid API_KEY).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
   schemas:
     EtaRequest:
       type: object
@@ -124,6 +111,19 @@ components:
           format: double
           description: Average speed in knots, should be under 25.
           example: 13.0
+  responses:
+    BadRequest:
+      description: The body in the request is not correct.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
   securitySchemes:
     ApiKey:
       type: apiKey
