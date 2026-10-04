@@ -49,30 +49,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    EtaRequest:
-      type: object
-      required:
-      - vessel
-      - arrival
-      properties:
-        vessel:
-          $ref: '#/components/schemas/Vessel'
-        departure:
-          type: object
-          properties:
-            date:
-              type: string
-              format: date-time
-              description: Departure date/time.
-            portCode:
-              type: string
-              description: Departure port UN/LOCODE.
-        arrival:
-          type: object
-          properties:
-            portCode:
-              type: string
-              description: Arrival port UN/LOCODE.
     ErrorInfo:
       type: object
       required:
@@ -111,15 +87,39 @@ components:
           format: double
           description: Average speed in knots, should be under 25.
           example: 13.0
+    EtaRequest:
+      type: object
+      required:
+      - vessel
+      - arrival
+      properties:
+        vessel:
+          $ref: '#/components/schemas/Vessel'
+        departure:
+          type: object
+          properties:
+            date:
+              type: string
+              format: date-time
+              description: Departure date/time.
+            portCode:
+              type: string
+              description: Departure port UN/LOCODE.
+        arrival:
+          type: object
+          properties:
+            portCode:
+              type: string
+              description: Arrival port UN/LOCODE.
   responses:
-    BadRequest:
-      description: The body in the request is not correct.
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorInfo'
-    Unauthorized:
-      description: The authentication failed (missing or invalid API_KEY).
+    BadRequest:
+      description: The body in the request is not correct.
       content:
         application/json:
           schema:

@@ -118,25 +118,24 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    UsageStartTime:
+      name: startTime
+      in: query
+      required: false
+      description: Start time at which usages must be found.
+      schema:
+        type: string
+        format: date-time
+    UsageEndTime:
+      name: endTime
+      in: query
+      required: false
+      description: End time at which usages must be found.
+      schema:
+        type: string
+        format: date-time
   schemas:
-    UsagesResponse:
-      type: object
-      properties:
-        allCalls:
-          type: integer
-          format: int64
-        successCalls:
-          type: integer
-          format: int64
-        clientErrorCalls:
-          type: integer
-          format: int64
-        serverErrorCalls:
-          type: integer
-          format: int64
-        consumedApiUnits:
-          type: integer
-          format: int64
     ErrorInfo:
       type: object
       required:
@@ -157,23 +156,24 @@ components:
         time:
           type: string
           format: date-time
-  parameters:
-    UsageEndTime:
-      name: endTime
-      in: query
-      required: false
-      description: End time at which usages must be found.
-      schema:
-        type: string
-        format: date-time
-    UsageStartTime:
-      name: startTime
-      in: query
-      required: false
-      description: Start time at which usages must be found.
-      schema:
-        type: string
-        format: date-time
+    UsagesResponse:
+      type: object
+      properties:
+        allCalls:
+          type: integer
+          format: int64
+        successCalls:
+          type: integer
+          format: int64
+        clientErrorCalls:
+          type: integer
+          format: int64
+        serverErrorCalls:
+          type: integer
+          format: int64
+        consumedApiUnits:
+          type: integer
+          format: int64
   responses:
     Unauthorized:
       description: The authentication failed (missing or invalid API_KEY).

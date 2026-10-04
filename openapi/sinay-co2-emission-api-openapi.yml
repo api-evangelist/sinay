@@ -67,18 +67,6 @@ components:
         WtwEmissionIntensity:
           type: number
           description: CO2 Well-to-Wheel emission in Ton/TEU per kilometer.
-    ComputeCo2Response:
-      type: object
-      properties:
-        input:
-          $ref: '#/components/schemas/ComputeCo2Request'
-        length:
-          type: number
-          format: double
-          description: Voyage length in nautical miles.
-          example: 1709.7834398908199
-        co2EmissionResult:
-          $ref: '#/components/schemas/Co2EmissionResults'
     ErrorInfo:
       type: object
       required:
@@ -99,6 +87,12 @@ components:
         time:
           type: string
           format: date-time
+    Port:
+      type: object
+      properties:
+        portCode:
+          type: string
+          description: UN/LOCODE (5-character code identifying the port per the UNECE).
     Vessel:
       type: object
       properties:
@@ -117,12 +111,18 @@ components:
           format: double
           description: Average speed in knots, should be under 25.
           example: 13.0
-    Port:
+    ComputeCo2Response:
       type: object
       properties:
-        portCode:
-          type: string
-          description: UN/LOCODE (5-character code identifying the port per the UNECE).
+        input:
+          $ref: '#/components/schemas/ComputeCo2Request'
+        length:
+          type: number
+          format: double
+          description: Voyage length in nautical miles.
+          example: 1709.7834398908199
+        co2EmissionResult:
+          $ref: '#/components/schemas/Co2EmissionResults'
     Co2EmissionResults:
       type: object
       properties:
@@ -140,14 +140,14 @@ components:
         arrival:
           $ref: '#/components/schemas/Port'
   responses:
-    BadRequest:
-      description: The body in the request is not correct.
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorInfo'
-    Unauthorized:
-      description: The authentication failed (missing or invalid API_KEY).
+    BadRequest:
+      description: The body in the request is not correct.
       content:
         application/json:
           schema:

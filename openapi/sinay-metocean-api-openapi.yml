@@ -89,19 +89,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: The body in the request is not correct.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
-    Unauthorized:
-      description: The authentication failed (missing or invalid API_KEY).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorInfo'
   schemas:
     ErrorInfo:
       type: object
@@ -123,6 +110,19 @@ components:
         time:
           type: string
           format: date-time
+  responses:
+    BadRequest:
+      description: The body in the request is not correct.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
   securitySchemes:
     ApiKey:
       type: apiKey

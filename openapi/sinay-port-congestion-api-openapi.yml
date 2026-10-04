@@ -78,14 +78,14 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   responses:
-    BadRequest:
-      description: The body in the request is not correct.
+    Default:
+      description: Default error response.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorInfo'
-    Default:
-      description: Default error response.
+    BadRequest:
+      description: The body in the request is not correct.
       content:
         application/json:
           schema:
