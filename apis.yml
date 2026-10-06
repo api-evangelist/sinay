@@ -48,7 +48,7 @@ tags:
 - ETA
 - Ocean Data
 created: '2026-07-12'
-modified: '2026-07-12'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: sinay:sinay-co2-emission-api
@@ -160,6 +160,10 @@ apis:
   - type: OpenCollection
     url: collections/sinay.opencollection.json
 common:
+- url: https://sinay.ai/en/insights/
+  type: Blog
+- url: https://sinay.ai/en/feed/
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/sinay-capability-edges.yml
   name: Sinay Business Capability Map
