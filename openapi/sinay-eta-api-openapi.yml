@@ -49,44 +49,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    ErrorInfo:
-      type: object
-      required:
-      - errorCode
-      - message
-      - details
-      - time
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: string
-        time:
-          type: string
-          format: date-time
-    Vessel:
-      type: object
-      properties:
-        imo:
-          type: integer
-          format: int64
-          description: 'IMO ship identification number: 7 digits.'
-          example: 9706906
-        mmsi:
-          type: integer
-          format: int64
-          description: 'MMSI identifier of the vessel: 9 digits.'
-          example: 215199000
-        speed:
-          type: number
-          format: double
-          description: Average speed in knots, should be under 25.
-          example: 13.0
     EtaRequest:
       type: object
       required:
@@ -111,6 +73,44 @@ components:
             portCode:
               type: string
               description: Arrival port UN/LOCODE.
+    Vessel:
+      type: object
+      properties:
+        imo:
+          type: integer
+          format: int64
+          description: 'IMO ship identification number: 7 digits.'
+          example: 9706906
+        mmsi:
+          type: integer
+          format: int64
+          description: 'MMSI identifier of the vessel: 9 digits.'
+          example: 215199000
+        speed:
+          type: number
+          format: double
+          description: Average speed in knots, should be under 25.
+          example: 13.0
+    ErrorInfo:
+      type: object
+      required:
+      - errorCode
+      - message
+      - details
+      - time
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+        time:
+          type: string
+          format: date-time
   responses:
     Unauthorized:
       description: The authentication failed (missing or invalid API_KEY).

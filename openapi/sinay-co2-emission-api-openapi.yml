@@ -49,6 +49,15 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    ComputeCo2Request:
+      type: object
+      properties:
+        vessel:
+          $ref: '#/components/schemas/Vessel'
+        departure:
+          $ref: '#/components/schemas/Port'
+        arrival:
+          $ref: '#/components/schemas/Port'
     Co2MethodResult:
       type: object
       properties:
@@ -67,26 +76,25 @@ components:
         WtwEmissionIntensity:
           type: number
           description: CO2 Well-to-Wheel emission in Ton/TEU per kilometer.
-    ErrorInfo:
+    Co2EmissionResults:
       type: object
-      required:
-      - errorCode
-      - message
-      - details
-      - time
       properties:
-        errorCode:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: string
-        time:
-          type: string
-          format: date-time
+        vesselMethodResult:
+          $ref: '#/components/schemas/Co2MethodResult'
+        tradeLaneMethodResult:
+          $ref: '#/components/schemas/Co2MethodResult'
+    ComputeCo2Response:
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/ComputeCo2Request'
+        length:
+          type: number
+          format: double
+          description: Voyage length in nautical miles.
+          example: 1709.7834398908199
+        co2EmissionResult:
+          $ref: '#/components/schemas/Co2EmissionResults'
     Port:
       type: object
       properties:
@@ -111,34 +119,26 @@ components:
           format: double
           description: Average speed in knots, should be under 25.
           example: 13.0
-    ComputeCo2Response:
+    ErrorInfo:
       type: object
+      required:
+      - errorCode
+      - message
+      - details
+      - time
       properties:
-        input:
-          $ref: '#/components/schemas/ComputeCo2Request'
-        length:
-          type: number
-          format: double
-          description: Voyage length in nautical miles.
-          example: 1709.7834398908199
-        co2EmissionResult:
-          $ref: '#/components/schemas/Co2EmissionResults'
-    Co2EmissionResults:
-      type: object
-      properties:
-        vesselMethodResult:
-          $ref: '#/components/schemas/Co2MethodResult'
-        tradeLaneMethodResult:
-          $ref: '#/components/schemas/Co2MethodResult'
-    ComputeCo2Request:
-      type: object
-      properties:
-        vessel:
-          $ref: '#/components/schemas/Vessel'
-        departure:
-          $ref: '#/components/schemas/Port'
-        arrival:
-          $ref: '#/components/schemas/Port'
+        errorCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+        time:
+          type: string
+          format: date-time
   responses:
     Unauthorized:
       description: The authentication failed (missing or invalid API_KEY).

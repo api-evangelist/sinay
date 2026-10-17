@@ -84,14 +84,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorInfo'
-    BadRequest:
-      description: The body in the request is not correct.
+    Unauthorized:
+      description: The authentication failed (missing or invalid API_KEY).
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorInfo'
-    Unauthorized:
-      description: The authentication failed (missing or invalid API_KEY).
+    BadRequest:
+      description: The body in the request is not correct.
       content:
         application/json:
           schema:
