@@ -1,4 +1,4 @@
-# Sinay (sinay)
+# Sinay
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,105 +64,128 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Sinay is a maritime data and analytics company whose Developers Platform exposes a marketplace of REST APIs for the shipping and ocean-tech industry - vessel and port lookup from combined satellite and terrestrial AIS, metocean (weather and ocean) conditions, per-voyage CO2 emissions modeled on the GLEC Framework, ETA prediction, live port congestion, sailing schedules, and underwater noise.
+Sinay is a maritime data and analytics company whose Developers Platform exposes a marketplace of REST APIs for the shipping and ocean-tech industry - vessel and port lookup from combined satellite and terrestrial AIS, metocean (weather and ocean) conditions, per-voyage CO2 emissions modeled on the GLEC Framework, ETA prediction, live port congestion, sailing schedules, and underwater noise. Every API is called over HTTPS at api.sinay.ai, authenticated with a single API_KEY header, and metered as monthly API units / credits with a free developer key to start.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/sinay/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/sinay/refs/heads/main/apis.yml)
+**Areas:** Vessel Tracking · AIS · Maritime · Maritime Data · Weather · CO2 Emissions · Port Congestion · Ship Tracking · ETA · Ocean Data
 
-## Access Model (read this first)
+## Sinay on APIs.io
 
-- **Marketplace of per-product REST APIs.** Every Sinay API is served over HTTPS from the single host `api.sinay.ai`, with each product mounted under its own versioned base path - e.g. `https://api.sinay.ai/co2/api/v2` and `https://api.sinay.ai/ports-vessels/api/v1`.
-- **One auth scheme everywhere.** All endpoints require an API key sent in an `API_KEY` request header. Get a free key from the [Sinay Developers Platform](https://developers.sinay.ai/).
-- **Per-API subscriptions / credits.** Usage is metered as monthly API calls / API units (credits). Published tiers: a **Free** plan (~500 calls/month), a **Pro** plan (~10,000 calls/month), and a custom **Enterprise** plan, plus a no-credit-card **free trial** (~100 calls/month). Some endpoints consume more than one API unit per call. Each API reports its own consumption via a `/usages` endpoint (or `/consumption` on Port Congestion). Prices/currency are not reconciled here - confirm on the Developers Platform.
-- **REST only.** No public WebSocket API is documented. A separate Webhooks API (container-tracking / Safecube surface) pushes events via HTTP POST to a subscriber endpoint; it is out of scope for the five maritime APIs profiled here.
+Everything profiled for Sinay is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/sinay/](https://apis.io/providers/sinay/)** — or go straight to one of the APIs or properties below.
 
-This entry profiles five of Sinay's maritime-data APIs. The Swagger index at [api.sinay.ai/doc](https://api.sinay.ai/doc/index.html) also lists live specs for underwater noise, sailing schedules, Safecube Ports Intelligence (beta), container tracking, webhooks, and Safecube - not profiled separately here.
+### APIs (6)
 
-## Tags
+- [Sinay CO2 Emission API](https://apis.io/apis/sinay/sinay-co2-emission-api/) — Per-voyage CO2 emission computation using vessel-model and GLEC tradelane methods.
+- [Sinay ETA API](https://apis.io/apis/sinay/sinay-eta-api/) — Estimated time of arrival prediction for a vessel to a destination port.
+- [Sinay Metocean API](https://apis.io/apis/sinay/sinay-metocean-api/) — Meteorological and oceanographic conditions for an area and time.
+- [Sinay Port Congestion API](https://apis.io/apis/sinay/sinay-port-congestion-api/) — Aggregated live port congestion data.
+- [Sinay Ports and Vessels API](https://apis.io/apis/sinay/sinay-ports-and-vessels-api/) — Vessel and port lookup from combined satellite and terrestrial AIS.
+- [Sinay Usage API](https://apis.io/apis/sinay/sinay-usage-api/) — Monthly API usage and credit-consumption reporting.
 
-- Vessel Tracking
-- AIS
-- Maritime
-- Maritime Data
-- Weather
-- CO2 Emissions
-- Port Congestion
-- Ship Tracking
-- ETA
-- Ocean Data
+### Published properties
 
-## Timestamps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Created:** 2026-07-12
-- **Modified:** 2026-07-12
+#### Agentic access (1)
 
-## APIs
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Sinay Ports and Vessels API
+- [Sinay Agentic Access](https://apis.io/agentic-access/sinay/sinay-agentic-access/)
 
-Look up vessels by name, MMSI, or IMO and ports by name or UN/LOCODE from Sinay's maritime reference data, built on combined satellite and terrestrial AIS.
+#### Collections (7)
 
-- **Human URL:** [https://sinay.ai/en/sinay-hub/ports-and-vessels-api/](https://sinay.ai/en/sinay-hub/ports-and-vessels-api/)
-- **Base URL:** `https://api.sinay.ai/ports-vessels/api/v1`
-- Endpoints: `GET /vessels`, `GET /ports`, `GET /usages`
+Postman and Open Collection request collections.
 
-### Sinay Metocean API
+- [Sinay Maritime APIs](https://apis.io/collections/sinay/open-sinay/)
+- [Sinay Maritime APIs CO2 Emission API](https://apis.io/collections/sinay/open-sinay-co2-emission-api/)
+- [Sinay Maritime APIs CO2 Emission ETA API](https://apis.io/collections/sinay/open-sinay-eta-api/)
+- [Sinay Maritime APIs CO2 Emission Metocean API](https://apis.io/collections/sinay/open-sinay-metocean-api/)
+- [Sinay Maritime APIs CO2 Emission Port Congestion API](https://apis.io/collections/sinay/open-sinay-port-congestion-api/)
+- [Sinay Maritime APIs CO2 Emission Ports and Vessels API](https://apis.io/collections/sinay/open-sinay-ports-and-vessels-api/)
+- [Sinay Maritime APIs CO2 Emission Usage API](https://apis.io/collections/sinay/open-sinay-usage-api/)
 
-Retrieve meteorological and oceanographic (weather and ocean) conditions for a geographic area and time window from a chosen model.
+#### Security (2)
 
-- **Human URL:** [https://sinay.ai/en/sinay-hub/metocean-api/](https://sinay.ai/en/sinay-hub/metocean-api/)
-- **Base URL:** `https://api.sinay.ai/metocean/api/v1`
-- Endpoints: `GET /models`, `POST /stations`, `GET /usages`
+Authentication, trust centre, and vulnerability disclosure.
 
-### Sinay CO2 Emission API
+- [Sinay Authentication](https://apis.io/security/sinay/sinay-authentication/)
+- [Sinay Domain Security](https://apis.io/security/sinay/sinay-domain-security/)
 
-Compute the CO2 emissions of a container voyage between two ports for a given vessel (IMO or MMSI), returning voyage length and tons of CO2 per TEU via a vessel-model method and a GLEC Framework tradelane method (WTT/TTW/WTW).
+#### Plans and pricing (1)
 
-- **Human URL:** [https://sinay.ai/en/sinay-hub/co2-api/](https://sinay.ai/en/sinay-hub/co2-api/)
-- **Base URL:** `https://api.sinay.ai/co2/api/v2`
-- Endpoints: `POST /compute-co2`, `GET /usages`
+Published plans, tiers and prices.
 
-### Sinay ETA API
+- [Sinay Plans Pricing](https://apis.io/plans/sinay/sinay-plans-pricing/)
 
-Predict a vessel's estimated time of arrival to a destination port, routed from its latest AIS position or from a specified departure port and date.
+#### Rate limits (1)
 
-- **Human URL:** [https://sinay.ai/en/sinay-hub/eta-api/](https://sinay.ai/en/sinay-hub/eta-api/)
-- **Base URL:** `https://api.sinay.ai/etac/api/v1`
-- Endpoints: `POST /compute-eta`, `GET /usages`
+Published request limits.
 
-### Sinay Port Congestion API
+- [Sinay Rate Limits](https://apis.io/rate-limits/sinay/sinay-rate-limits/)
 
-Retrieve aggregated live port congestion data for a single port by UN/LOCODE or up to ten ports at once, plus credit-consumption reporting.
+#### FinOps (1)
 
-- **Human URL:** [https://sinay.ai/en/sinay-hub/port-congestion-api/](https://sinay.ai/en/sinay-hub/port-congestion-api/)
-- **Base URL:** `https://api.sinay.ai/congestion/api/v1`
-- Endpoints: `GET /congestion/{portCode}`, `POST /congestion/batch`, `GET /consumption/current-period`, `GET /consumption/periods`
+What the API costs to run, by operation.
 
-## Artifacts
+- [Sinay Finops](https://apis.io/finops/sinay/sinay-finops/)
 
-- [OpenAPI](openapi/sinay-openapi.yml) - consolidated description of all five APIs
-- [Postman Collection](collections/sinay.postman_collection.json)
-- [Open Collection](collections/sinay.opencollection.json)
-- [Authentication](authentication/sinay-authentication.yml)
-- [Plans](plans/sinay-plans-pricing.yml)
-- [Rate Limits](rate-limits/sinay-rate-limits.yml)
-- [FinOps](finops/sinay-finops.yml)
-- [Domain Security](security/sinay-domain-security.yml)
-- [Review](review.yml)
+## Where to find this API
 
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://sinay.ai)
 - [Documentation](https://help.sinay.ai/sinay-apis)
-- [Sign Up / Developers Platform](https://developers.sinay.ai/)
-- [LinkedIn](https://www.linkedin.com/company/sinay)
+- [Sign up](https://developers.sinay.ai/)
+- [Blog](https://sinay.ai/en/insights/)
 
-## Grounding & Honesty Notes
+## API Evangelist rating
 
-- Endpoints, methods, the `API_KEY` header security scheme, and the CO2 / ETA / congestion request-response shapes were transcribed from the live per-product Swagger files at `https://api.sinay.ai/<product>/api/<version>/swagger.yaml` (confirmed 2026-07-12).
-- In the consolidated OpenAPI, some response bodies (vessel/port records, metocean stations, ETA result, congestion aggregate) are represented as generic objects; the authoritative field-level schemas live in the upstream per-product Swagger.
-- Pricing (`plans`, `finops`) is modeled from public descriptions of the Developers Platform and marked `reconciled: false`; per-unit prices, currency, and per-endpoint credit weightings are unverified.
+**Kin Score 27.8** — thin · rubric 0.24.0 · scored 2026-10-17
 
-## Maintainers
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 50.3 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 22.6 |
+| Access clarity | 21.1 |
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Agent readiness 22.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/sinay/](https://apis.io/providers/sinay/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Sinay: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/sinay/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
